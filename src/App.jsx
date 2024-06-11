@@ -1,7 +1,9 @@
+import WhatsNewSection from "./components/WhatsNewSection";
+
 function App() {
   return (
     <>
-      <div>Hello World!</div>
+      <WhatsNewSection />
     </>
   );
 }

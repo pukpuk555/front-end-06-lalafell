@@ -1,7 +1,13 @@
+import { HeroComponent } from "./components/Hero";
+import { HeroMobileComponent } from "./components/็HeroMobile";
+
+
+
 function App() {
   return (
     <>
-      <div>Hello World!</div>
+      <div>
+      </div>
     </>
   );
 }

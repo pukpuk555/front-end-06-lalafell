@@ -1,6 +1,16 @@
+import React, { useState } from 'react';
+import FooterSection from './components/FooterSection';
+import ContactButton from './components/ContactButton';
+import ContactForm from './components/ContactForm';
 import WhatsNewSection from "./components/WhatsNewSection";
 
-function App() {
+const App = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+  
   const whatNewArray = [
     {
       name: "Kimetsu no Yaiba Custom",
@@ -41,10 +51,15 @@ function App() {
   ];
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen">
       <WhatsNewSection whatNewArray={whatNewArray} />
-    </>
+      <FooterSection />
+      <ContactButton onClick={toggleModal} />
+      {isModalOpen && <ContactForm onClose={toggleModal} />}
+    </div>
+
   );
-}
+};
 
 export default App;
+

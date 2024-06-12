@@ -3,7 +3,9 @@ import FooterSection from "./components/FooterSection";
 import ContactButton from "./components/ContactButton";
 import ContactForm from "./components/ContactForm";
 import WhatsNewSection from "./components/WhatsNewSection";
-
+import NavbarSection from "./components/NavbarSection";
+import OurProductSection from "./components/OurProductSection";
+    
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,7 +54,9 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen">
+      <NavbarSection/>
       <WhatsNewSection whatNewArray={whatNewArray} />
+      <OurProductSection />
       <FooterSection />
       <ContactButton onClick={toggleModal} />
       {isModalOpen && <ContactForm onClose={toggleModal} />}

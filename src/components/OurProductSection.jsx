@@ -2,11 +2,11 @@ import React from "react";
 
 const OurProductSection = () => {
   return (
-    <div class="md:max-w-5xl md:mx-auto scroll-smooth mb-10">
-      <section class="m-auto mx-5 lg:mx-0 md:w-[1024px] flex flex-col justify-center">
+    <div class="md:w-[1024px] w-screen md:mx-auto scroll-smooth mb-10 flex flex-cols items-center">
+      <section class="m-auto mx-5 lg:mx-0 w-screen ">
         <h3 class="text-3xl font-bold my-5">Our Products</h3>
-        <div className="flex justify-center">
-          <div class="grid gap-5 md:grid-cols-3 max-w-[900px] max-h-[900px]">
+        <div className="md:flex lg:flex justify-center mx-auto container">
+          <div class="grid gap-5 md:grid-cols-3 md:max-w-[900px]">
             <div class="md:mb-0 ease-in col-span-1 md:col-span-2 relative">
               <img
                 class="w-full h-[150px] rounded-lg md:h-[400px] lg:h-[600px] md:mb-4 md:object-center object-cover lg:duration-300 lg:transform lg:hover:scale-105"

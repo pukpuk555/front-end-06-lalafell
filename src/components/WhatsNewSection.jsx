@@ -3,7 +3,7 @@ import ProductCard from "./ProductCard";
 
 function WhatsNewSection({ whatNewArray }) {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-screen ml-4 md:ml-0 md:w-auto ">
       <div className="w-screen md:w-[1024px] mx-5 lg:mx-0">
         <h3 className="text-xl md:text-3xl font-bold">What's New</h3>
         <div className="flex md:justify-center">

@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const NavbarSection = () => {
   return (
-    <div className="shadow-lg">
+    <div className="shadow-lg fixed top-0 w-screen content-center bg-white ">
       <nav className="max-w-5xl mx-auto">
         <div className="flex justify-between h-[80px] md:h-[100px] items-center mx-4 lg:mx-0">
           <a

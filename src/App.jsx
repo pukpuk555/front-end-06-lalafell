@@ -5,7 +5,7 @@ import ContactForm from "./components/ContactForm";
 import WhatsNewSection from "./components/WhatsNewSection";
 import NavbarSection from "./components/NavbarSection";
 import OurProductSection from "./components/OurProductSection";
-    
+
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -54,7 +54,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <NavbarSection/>
+      <NavbarSection />
       <WhatsNewSection whatNewArray={whatNewArray} />
       <OurProductSection />
       <FooterSection />

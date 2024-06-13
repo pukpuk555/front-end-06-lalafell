@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import ChangePasswodForm from "./ChangePasswodForm";
 
 function ProfileCard() {
+  const [emailToggle, setEmailToggle] = useState(false);
+  const [changePassword, setChangePassword] = useState(false);
+
+  const emailOn = (e) => {
+    e.preventDefault();
+    setEmailToggle(!emailToggle);
+  };
+  const passwordForm = (e) => {
+    e.preventDefault();
+    setChangePassword(!changePassword);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //logic here
+  };
+
   return (
     <div className="w-[700px]">
       <h2 className="text-4xl font-bold">Your Account</h2>
-      <div className="w-[700px] h-[530px] flex">
+      <div className="w-[700px] h-[450px] flex">
         <div className="w-2/5 flex flex-col items-center">
           <img
             src="#"
@@ -19,7 +37,7 @@ function ProfileCard() {
         </div>
         <div className="w-3/5">
           <h3 className="text-2xl font-semibold my-3">Edit Your Profile</h3>
-          <form className="my-3">
+          <form onSubmit={handleSubmit} className="my-3">
             <div>
               <label htmlFor="firstName">First Name</label>
               <br />
@@ -43,28 +61,37 @@ function ProfileCard() {
             <div>
               <label htmlFor="email">Email</label>
               <br />
-              {/* <input
-                type="text"
-                name="email"
-                id="email"
-                className="mt-1 mb-2 rounded-md border-[1px] border-black w-[330px] h-[30px]"
-              /> */}
               <div className="flex justify-between">
-                <p className="mt-1 mb-2 mx-3">example@example.com</p>
-                <button>edit</button>
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  // placeholder change to usestate
+                  placeholder="example@example.com"
+                  className={`mt-1 mb-2 rounded-md border-[1px] border-black w-[330px] h-[30px] ${
+                    emailToggle ? "flex" : "hidden"
+                  }`}
+                />
+
+                <p
+                  className={`mt-1 mb-2 mx-3 ${
+                    emailToggle ? "hidden" : "flex"
+                  }`}
+                >
+                  example@example.com
+                </p>
+                <button onClick={emailOn}>
+                  {emailToggle ? "Submit" : "Edit"}
+                </button>
               </div>
             </div>
             <div>
               <label htmlFor="password">Password</label>
               <br />
-              {/* <input
-                type="text"
-                name="password"
-                id="password"
-                className="mt-1 mb-2 rounded-md border-[1px] border-black w-[330px] h-[30px]"
-              /> */}
               <div className="flex justify-between">
-                <button className="mt-1 mb-2 mx-3">Change Password</button>
+                <button onClick={passwordForm} className="mt-1 mb-2 mx-3">
+                  Change Password
+                </button>
               </div>
             </div>
             <button
@@ -78,6 +105,7 @@ function ProfileCard() {
           </form>
         </div>
       </div>
+      {changePassword && <ChangePasswodForm passwordForm={passwordForm} />}
     </div>
   );
 }

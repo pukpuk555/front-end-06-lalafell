@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ProfileCard from "./components/ProfileCard";
 // import FooterSection from "./components/FooterSection";
 // import ContactButton from "./components/ContactButton";
 // import ContactForm from "./components/ContactForm";
@@ -65,7 +64,6 @@ const App = () => {
       <FooterSection />
       <ContactButton onClick={toggleModal} />
       {isModalOpen && <ContactForm onClose={toggleModal} />} */}
-      <ProfileCard />
     </div>
   );
 };

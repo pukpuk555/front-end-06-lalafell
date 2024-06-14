@@ -44,7 +44,7 @@ function HeroComponent() {
                                 <ul className="list-disc text-sm md:text-lg lg:text-xl text-white py-2">
                                     <li className="md:py-1">เรามี Keyboart คุณภาพสูงจากแบรนด์ชั้นนำ</li>
                                     <li className="md:py-1">บริการหลังการขายที่ยอดเยี่ยม รับประกันความพึงพอใจ</li>
-                                    <li className="md:py-1">ทีมงานผู้เชี่ยวชาญที่พร้อมให้คำแนะนำ</li>
+                                    <li className="md:py-1">ทีมงานผู้เชี่ยวชาญที่พร้อมให้คำแนะนำทั้งก่อนและหลังบริการ</li>
                                 </ul>
                             </div>
                         </div>

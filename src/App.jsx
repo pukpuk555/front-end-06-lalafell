@@ -6,6 +6,7 @@ import WhatsNewSection from "./components/WhatsNewSection";
 import NavbarSection from "./components/NavbarSection";
 import OurProductSection from "./components/OurProductSection";
 import HeroComponent from "./components/HeroComponent";
+import SignUp from "./components/sign-up";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -55,7 +56,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className="z-50">
+      {/* <div className="z-50">
         <NavbarSection />
       </div>
       <HeroComponent />
@@ -63,7 +64,8 @@ const App = () => {
       <OurProductSection />
       <FooterSection />
       <ContactButton onClick={toggleModal} />
-      {isModalOpen && <ContactForm onClose={toggleModal} />}
+      {isModalOpen && <ContactForm onClose={toggleModal} />} */}
+      <SignUp />
     </div>
   );
 };

@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import OrderHistory from "./components/OrderHistory";
-// import FooterSection from "./components/FooterSection";
-// import ContactButton from "./components/ContactButton";
-// import ContactForm from "./components/ContactForm";
-// import WhatsNewSection from "./components/WhatsNewSection";
-// import NavbarSection from "./components/NavbarSection";
-// import OurProductSection from "./components/OurProductSection";
-// import HeroComponent from "./components/HeroComponent";
+import FooterSection from "./components/FooterSection";
+import ContactButton from "./components/ContactButton";
+import ContactForm from "./components/ContactForm";
+import WhatsNewSection from "./components/WhatsNewSection";
+import NavbarSection from "./components/NavbarSection";
+import OurProductSection from "./components/OurProductSection";
+import HeroComponent from "./components/HeroComponent";
 
 const App = () => {
-  // const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // const toggleModal = () => {
-  //   setIsModalOpen(!isModalOpen);
-  // };
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
 
   const whatNewArray = [
     {
@@ -56,7 +55,7 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* <div className="z-50">
+      <div className="z-50">
         <NavbarSection />
       </div>
       <HeroComponent />
@@ -64,8 +63,7 @@ const App = () => {
       <OurProductSection />
       <FooterSection />
       <ContactButton onClick={toggleModal} />
-      {isModalOpen && <ContactForm onClose={toggleModal} />} */}
-      <OrderHistory />
+      {isModalOpen && <ContactForm onClose={toggleModal} />}
     </div>
   );
 };

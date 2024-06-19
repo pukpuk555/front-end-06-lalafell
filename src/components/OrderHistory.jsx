@@ -3,7 +3,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import OrderCard from "./OrderCard";
 
 function OrderHistory() {
-  const [order, setOrder] = useState([
+  const order = [
     {
       id: "o1",
       name: "Kimetsu no Yaiba Custom",
@@ -36,7 +36,7 @@ function OrderHistory() {
       price: "$10.99",
       status: "To Ship",
     },
-  ]);
+  ];
   const pendingOrder = order.filter((order) => order.status === "Pending");
   const toShipOrder = order.filter((order) => order.status === "To Ship");
   const shipingOrder = order.filter((order) => order.status === "Shiping");
@@ -48,34 +48,34 @@ function OrderHistory() {
         <h2 className="text-4xl font-bold pb-3">Your Order</h2>
         <div className="w-[700px] h-[450px] px-4  border-[1px] border-black rounded-xl overflow-auto flex flex-col items-center ">
           <Tabs defaultValue="yourOrder" className="w-full ">
-            <TabsList className="flex justify-between bg-white sticky top-0 border-b-[1px] border-black rounded-none">
+            <TabsList className="flex justify-between bg-white sticky top-0 border-b-[1px] border-black rounded-none mt-[3px]">
               <TabsTrigger
                 value="yourOrder"
-                className="w-1/4 text-xl focus:border-x-[1px] border-black"
+                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
               >
                 Your Order
               </TabsTrigger>
               <TabsTrigger
                 value="pending"
-                className="w-1/4 text-xl focus:border-x-[1px] border-black"
+                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
               >
                 Pending
               </TabsTrigger>
               <TabsTrigger
                 value="toShip"
-                className="w-1/4 text-xl focus:border-x-[1px] border-black"
+                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
               >
                 To Ship
               </TabsTrigger>
               <TabsTrigger
                 value="shiping"
-                className="w-1/4 text-xl focus:border-x-[1px] border-black"
+                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
               >
                 Shiping
               </TabsTrigger>
               <TabsTrigger
                 value="recived"
-                className="w-1/4 text-xl focus:border-x-[1px] border-black"
+                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
               >
                 Recived
               </TabsTrigger>

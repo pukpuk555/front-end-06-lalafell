@@ -2,7 +2,7 @@ import React from "react";
 
 function ProductCard({ name, img, price, describe }) {
   return (
-    <a href="#">
+    <a href="#" className="hover:scale-105 transition duration-500">
       <div className="card md:w-full bg-base-100 shadow-xl w-[200px]">
         <figure>
           <img src={img} alt={name} />

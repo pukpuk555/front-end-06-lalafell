@@ -20,12 +20,12 @@ function ProfileCard() {
   };
 
   return (
-    <div className="w-[700px]">
+    <div className="w-auto mb-[50px]">
       <h2 className="text-4xl font-bold pb-3">Your Account</h2>
-      <div className="w-[700px] h-[450px] flex  border-[1px] border-black rounded-xl">
-        <div className="w-2/5 flex flex-col items-center">
+      <div className=" md:w- lg:w-[700px] w-[500px] md:h-[450px] md:flex  border-[1px] border-black rounded-xl">
+        <div className="md:w-2/5 flex flex-col items-center">
           <img
-            src="#"
+            src="/defaultAccount.png"
             alt="profile"
             className="mt-10 w-[150px] h-[150px] rounded-xl"
           />
@@ -35,7 +35,7 @@ function ProfileCard() {
             </div>
           </button>
         </div>
-        <div className="w-3/5">
+        <div className="md:w-3/5 md:px-auto px-3">
           <h3 className="text-2xl font-semibold my-3">Edit Your Profile</h3>
           <form onSubmit={handleSubmit} className="my-3">
             <div>
@@ -45,7 +45,7 @@ function ProfileCard() {
                 type="text"
                 name="firstName"
                 id="firstname"
-                className="mt-1 mb-2 rounded-md border-[1px] border-black w-[330px] h-[30px]"
+                className="mt-1 mb-2 rounded-md border-[1px] border-black w-full lg:w-[330px] h-[30px]"
               />
             </div>
             <div>
@@ -55,7 +55,7 @@ function ProfileCard() {
                 type="text"
                 name="lasttName"
                 id="lastname"
-                className="mt-1 mb-2 rounded-md border-[1px] border-black w-[330px] h-[30px]"
+                className="mt-1 mb-2 rounded-md border-[1px] border-black w-full lg:w-[330px] h-[30px]"
               />
             </div>
             <div>
@@ -80,7 +80,7 @@ function ProfileCard() {
                 >
                   example@example.com
                 </p>
-                <button onClick={emailOn}>
+                <button onClick={emailOn} className="mr-3">
                   {emailToggle ? "Submit" : "Edit"}
                 </button>
               </div>

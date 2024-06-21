@@ -2,7 +2,7 @@ import React from "react";
 
 const FooterSection = () => {
   return (
-    <footer className="container mx-auto max-w-5xl flex items-center justify-between text-sm py-4 bottom-0 mt-auto border-t-2 border-black">
+    <footer className="container mx-auto max-w-5xl flex items-center justify-between text-sm pt-4 pb-20 md:py-4 md:bottom-0 mt-auto border-t-2 border-black  md:mb-0">
       <p className="flex-none text-gray-700 text-l">Lalafell Keyboard</p>
       <nav className="flex flex-grow justify-end">
         <ul className="flex flex-col text-gray-700 text-m">

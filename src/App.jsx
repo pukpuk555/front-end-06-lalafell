@@ -6,6 +6,7 @@ import WhatsNewSection from "./components/WhatsNewSection";
 import NavbarSection from "./components/NavbarSection";
 import OurProductSection from "./components/OurProductSection";
 import HeroComponent from "./components/HeroComponent";
+import SignInPage from "./page/SignIn.Page"
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -57,6 +58,7 @@ const App = () => {
     <div className="flex flex-col h-screen">
       <div className="z-50">
         <NavbarSection />
+       {/*  <SignInPage/> */}
       </div>
       <HeroComponent />
       <WhatsNewSection whatNewArray={whatNewArray} />
@@ -65,6 +67,7 @@ const App = () => {
       <ContactButton onClick={toggleModal} />
       {isModalOpen && <ContactForm onClose={toggleModal} />}
     </div>
+     
   );
 };
 

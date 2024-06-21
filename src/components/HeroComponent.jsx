@@ -1,108 +1,68 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function HeroComponent() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const totalItems = 4; // Number of carousel items
-  const intervalTime = 3000; // Time in milliseconds for each slide
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const totalItems = 4;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % totalItems);
-    }, intervalTime);
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % totalItems);
+    };
 
-    return () => clearInterval(interval); // Clear interval on component unmount
-  }, [totalItems]);
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + totalItems) % totalItems);
+    };
 
-  const handleButtonClick = (index) => {
-    setCurrentIndex(index);
-  };
-
-  return (
-    <div className="relative">
-      <div className="carousel-container relative lg:w-[1024px] lg:h-[419px] rounded-xl m-auto mt-[120px] mb-5 bg-black overflow-hidden">
-        <div
-          className="carousel flex transition-transform duration-1000"
-          style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-        >
-          <div
-            id="1"
-            className="carousel-item relative flex justify-center w-full min-w-full"
-          >
-            <img
-              src="/image.png"
-              className="object-cover object-center w-full opacity-60"
-            />
-            <div className="absolute top-[100px]">
-              <h1 className="text-5xl text-white font-bold">
-                Lalafell Keyboard
-              </h1>
+    return (
+        <div className="mt-[120px] mb-5 mx-0 flex justify-center">
+            <div className="carousel w-full max-w-[1024px] h-[200px] md:h-[300px] lg:h-[400px] mx-auto overflow-hidden relative rounded-lg">
+                <div
+                    className="carousel-inner flex transition-transform duration-1000"
+                    style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                >
+                    <div className="carousel-item relative w-full flex justify-center items-center">
+                        <img src="public/hero-banner-1.png" className="object-cover w-full h-full" />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center">
+                            <h1 className="text-2xl md:text-5xl lg:text-6xl font-bold text-white">Lalafell Keyboard</h1>
+                            <p className="text-lg md:text-xl lg:text-2xl my-4 text-white">Custom keyboard for anime fans</p>
+                        </div>
+                    </div>
+                    <div className="carousel-item relative w-full flex justify-center items-center">
+                        <img src="public/hero-banner-2.jpg" className="object-cover w-full h-full" />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center max-w-full w-9/12">
+                            <p className="text-sm md:text-lg lg:text-xl text-white bg-black/40 p-4 md:p-6 lg:p-8 md:leading-loose">
+                                "พบกับประสบการณ์การพิมพ์เหนือชั้นด้วยคีย์บอร์ดคุณภาพสูงจาก Lalafell Keyboard 
+                                ที่ออกแบบมาเพื่อความสะดวกสบายและประสิทธิภาพสูงสุด 
+                                ตอบโจทย์ความต้องการไม่ว่าจะเป็นการทำงานหรือการเล่นเกม"
+                            </p>
+                        </div>
+                    </div>
+                    <div className="carousel-item relative w-full flex justify-center items-center">
+                        <img src="public/hero-banner-3.jpg" className="object-cover w-full h-full" />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-full w-9/12">
+                            <div className="bg-black/40 p-4 md:p-6 lg:p-8">
+                                <h2 className="text-xl md:text-3xl lg:text-4xl font-bold text-white">ทำไมต้อง Lalafell?</h2>
+                                <ul className="list-disc text-sm md:text-lg lg:text-xl text-white py-2">
+                                    <li className="md:py-1">เรามี Keyboart คุณภาพสูงจากแบรนด์ชั้นนำ</li>
+                                    <li className="md:py-1">บริการหลังการขายที่ยอดเยี่ยม รับประกันความพึงพอใจ</li>
+                                    <li className="md:py-1">ทีมงานผู้เชี่ยวชาญที่พร้อมให้คำแนะนำทั้งก่อนและหลังบริการ</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="carousel-item relative w-full flex justify-center items-center">
+                        <img src="public/hero-banner-4.jpg" className="object-cover w-full h-full" />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center max-w-full w-9/12">
+                            <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white bg-black/40 p-4 md:p-6 lg:p-8">บริการจัดส่งฟรีทั่วประเทศ</h1>
+                        </div>
+                    </div>
+                </div>
+                <div className="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2">
+                    <button onClick={prevSlide} className="btn btn-circle">❮</button>
+                    <button onClick={nextSlide} className="btn btn-circle">❯</button>
+                </div>
             </div>
-            <div className="absolute px-[200px] top-[180px] text-center">
-              <p className="text-xl text-white">
-                พบกับประสบการณ์การพิมพ์เหนือชั้นด้วยคีย์บอร์ดคุณภาพสูงจาก
-                <br /> Lalafel Keyboard
-                ที่ออกแบบมาเพื่อความสะดวกสบายและประสิทธิภาพสูงสุด
-                ตอบโจทย์ทุกความต้องการไม่ว่าจะเป็นการทำงานหรือการเล่นเกม
-              </p>
-            </div>
-          </div>
-          <div
-            id="2"
-            className="carousel-item relative flex justify-center w-full min-w-full"
-          >
-            <img
-              src="/AI_Generated_Image_2024-06-11_455785615023201.png"
-              className="object-cover object-center w-full opacity-80"
-            />
-          </div>
-          <div
-            id="3"
-            className="carousel-item relative flex justify-center w-full min-w-full"
-          >
-            <img
-              src="/AI_Generated_Image_2024-06-11_455785591020201.png"
-              className="w-full object-cover object-center opacity-80"
-            />
-          </div>
-          <div
-            id="4"
-            className="carousel-item relative flex justify-center w-full min-w-full"
-          >
-            <img
-              src="/AI_Generated_Image_2024-06-11_455785591010201.png"
-              className="w-full object-cover object-center opacity-80"
-            />
-          </div>
         </div>
-      </div>
-      <div className="flex justify-center w-full pb-2 gap-2 absolute bottom-5 left-1/2 transform -translate-x-1/2">
-        <button
-          onClick={() => handleButtonClick(0)}
-          className={`btn btn-xs ${currentIndex === 0 ? "btn-active" : ""}`}
-        >
-          1
-        </button>
-        <button
-          onClick={() => handleButtonClick(1)}
-          className={`btn btn-xs ${currentIndex === 1 ? "btn-active" : ""}`}
-        >
-          2
-        </button>
-        <button
-          onClick={() => handleButtonClick(2)}
-          className={`btn btn-xs ${currentIndex === 2 ? "btn-active" : ""}`}
-        >
-          3
-        </button>
-        <button
-          onClick={() => handleButtonClick(3)}
-          className={`btn btn-xs ${currentIndex === 3 ? "btn-active" : ""}`}
-        >
-          4
-        </button>
-      </div>
-    </div>
-  );
+    );
 }
 
 export default HeroComponent;

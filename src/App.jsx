@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import FooterSection from "./components/FooterSection";
 import ContactButton from "./components/ContactButton";
 import ContactForm from "./components/ContactForm";
-import WhatsNewSection from "./components/WhatsNewSection";
 import NavbarSection from "./components/NavbarSection";
 import OurProductSection from "./components/OurProductSection";
 import HeroComponent from "./components/HeroComponent";
-import SignInPage from "./page/SignIn.Page"
+//import SignInPage from "./page/SignIn.Page"
+import DisplayProduct from "./components/DisplayProduct";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,6 +54,7 @@ const App = () => {
     },
   ];
 
+
   return (
     <div className="flex flex-col h-screen">
       <div className="z-50">
@@ -62,7 +63,7 @@ const App = () => {
       </div>
       <HeroComponent />
       <WhatsNewSection whatNewArray={whatNewArray} />
-      <OurProductSection />
+      <OurProductSection /> 
       <FooterSection />
       <ContactButton onClick={toggleModal} />
       {isModalOpen && <ContactForm onClose={toggleModal} />}
@@ -70,5 +71,4 @@ const App = () => {
      
   );
 };
-
 export default App;

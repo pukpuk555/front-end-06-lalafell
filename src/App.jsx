@@ -3,8 +3,10 @@ import FooterSection from "./components/FooterSection";
 import ContactButton from "./components/ContactButton";
 import ContactForm from "./components/ContactForm";
 import NavbarSection from "./components/NavbarSection";
+import OurProductSection from "./components/OurProductSection";
+import HeroComponent from "./components/HeroComponent";
+//import SignInPage from "./page/SignIn.Page"
 import DisplayProduct from "./components/DisplayProduct";
-
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,20 +56,19 @@ const App = () => {
 
 
   return (
-    <div>
-      <NavbarSection />
-      {/* <HeroComponent />
+    <div className="flex flex-col h-screen">
+      <div className="z-50">
+        <NavbarSection />
+       {/*  <SignInPage/> */}
+      </div>
+      <HeroComponent />
       <WhatsNewSection whatNewArray={whatNewArray} />
-      <OurProductSection /> */}
-      <DisplayProduct
-        whatNewArray = {whatNewArray}
-        keyCap = {keyCap}
-        switches = {switches}
-      />
+      <OurProductSection /> 
       <FooterSection />
       <ContactButton onClick={toggleModal} />
       {isModalOpen && <ContactForm onClose={toggleModal} />}
     </div>
+     
   );
 };
 export default App;

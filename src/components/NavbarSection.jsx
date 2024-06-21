@@ -1,29 +1,54 @@
 import React from "react";
+import { FaHome, FaSearch, FaShoppingCart, FaBell, FaUserCircle } from "react-icons/fa";
 
 const NavbarSection = () => {
   return (
-    <div className="shadow-lg fixed top-0 w-screen content-center bg-white ">
-      <nav className="max-w-5xl mx-auto">
-        <div className="flex justify-between h-[80px] md:h-[100px] items-center mx-4 lg:mx-0">
+    <div className="shadow-lg fixed top-0 w-screen bg-white z-50">
+      <nav className="lg:w-[1024px] w-screen mx-auto">
+        <div className="flex h-[80px] md:h-[100px] mx-4 lg:mx-0 md:justify-between justify-center items-center">
           <a
             href="#"
-            className="text-xl md:text-3xl lg:text-4xl font-bold ml-2 md:ml-0"
+            className="text-3xl md:text-4xl font-bold ml-2 md:ml-0 text-center"
           >
             Lalafell Keyboard
           </a>
-          <div>
-            <ul className="hidden md:flex md:justify-end text-lg md:text-xl lg:text-2xl space-x-4 md:space-x-6 lg:space-x-8">
-              <li className="py-2 rounded-lg hover:underline">Our Product</li>
-              <li className="py-2 rounded-lg hover:underline">Cart</li>
-              <li className="py-2 rounded-lg hover:underline">Contact Us</li>
-              <li className="rounded-lg">
-                <button className="bg-black text-white py-2 px-4 lg:py-3 lg:px-6 rounded-lg hover:bg-black/80">
-                  Sign In
-                </button>
-              </li>
-            </ul>
+          <div className="hidden md:flex md:justify-end text-xl md:text-2xl  space-x-4 md:space-x-6 lg:space-x-8">
+            <a href="#" className="py-2 rounded-lg hover:underline">
+              Our Product
+            </a>
+            <a href="#" className="py-2 rounded-lg hover:underline">
+              Cart
+            </a>
+            <a href="#" className="py-2 rounded-lg hover:underline">
+              Contact Us
+            </a>
+            <div className="rounded-lg">
+              <button className="bg-black text-white py-2 px-4 lg:py-3 lg:px-6 rounded-lg hover:bg-black/80">
+                Sign In
+              </button>
+            </div>
           </div>
         </div>
+      </nav>
+      {/* for mobile */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 shadow-lg z-50">
+        <ul className="flex justify-around py-4">
+          <a href="#">
+            <FaHome className="h-6 w-6" />
+          </a>
+          <a href="#">
+            <FaSearch className="h-6 w-6" />
+          </a>
+          <a href="#">
+            <FaShoppingCart className="h-6 w-6" />
+          </a>
+          <a href="#">
+            <FaBell className="h-6 w-6" />
+          </a>
+          <a href="#">
+            <FaUserCircle  className="h-6 w-6" />
+          </a>
+        </ul>
       </nav>
     </div>
   );

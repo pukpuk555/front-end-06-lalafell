@@ -1,21 +1,28 @@
 import React from "react";
-import { FaHome, FaSearch, FaShoppingCart, FaBell, FaUserCircle } from "react-icons/fa";
+import {
+  FaHome,
+  FaSearch,
+  FaShoppingCart,
+  FaBell,
+  FaUserCircle,
+} from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const NavbarSection = () => {
   return (
     <div className="shadow-lg fixed top-0 w-screen bg-white z-50">
       <nav className="lg:w-[1024px] w-screen mx-auto">
         <div className="flex h-[80px] md:h-[100px] mx-4 lg:mx-0 md:justify-between justify-center items-center">
-          <a
-            href="#"
+          <Link
+            to="/"
             className="text-3xl md:text-4xl font-bold ml-2 md:ml-0 text-center"
           >
             Lalafell Keyboard
-          </a>
+          </Link>
           <div className="hidden md:flex md:justify-end text-xl md:text-2xl  space-x-4 md:space-x-6 lg:space-x-8">
-            <a href="#" className="py-2 rounded-lg hover:underline">
+            <Link to="/productlist" className="py-2 rounded-lg hover:underline">
               Our Product
-            </a>
+            </Link>
             <a href="#" className="py-2 rounded-lg hover:underline">
               Cart
             </a>
@@ -23,9 +30,13 @@ const NavbarSection = () => {
               Contact Us
             </a>
             <div className="rounded-lg">
-              <button className="bg-black text-white py-2 px-4 lg:py-3 lg:px-6 rounded-lg hover:bg-black/80">
+              <Link
+                //ตรงนี้มอกไว้ก่อน จะเปลี่ยนระหว่าง sign in กับ Account
+                to="/account"
+                className="bg-black text-white py-2 px-4 lg:py-3 lg:px-6 rounded-lg hover:bg-black/80"
+              >
                 Sign In
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -46,7 +57,7 @@ const NavbarSection = () => {
             <FaBell className="h-6 w-6" />
           </a>
           <a href="#">
-            <FaUserCircle  className="h-6 w-6" />
+            <FaUserCircle className="h-6 w-6" />
           </a>
         </ul>
       </nav>

@@ -1,6 +1,6 @@
-import ContactButton from "@/components/ContactButton";
-import ContactForm from "@/components/ContactForm";
-import DisplayProduct from "@/components/DisplayProduct";
+import ContactButton from "@/components/ContactBotton/ContactButton";
+import ContactForm from "@/components/ContactBotton/ContactForm";
+import DisplayProduct from "@/components/DisplayProduct/DisplayProduct";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
 import React, { useState } from "react";

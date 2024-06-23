@@ -1,8 +1,8 @@
-import AccountNav from "@/components/AccountNav";
-import ContactButton from "@/components/ContactButton";
+import AccountNav from "@/components/MyAccount/AccountNav";
+import ContactButton from "@/components/ContactBotton/ContactButton";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
-import ProfileCard from "@/components/ProfileCard";
+import ProfileCard from "@/components/MyAccount/ProfileCard";
 import React, { useState } from "react";
 
 function AccountPage() {

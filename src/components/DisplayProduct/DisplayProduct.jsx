@@ -4,7 +4,7 @@ import FiltersProductType from "./FiltersProductType";
 import FiltersButton from "./FiltersButton";
 import SearchBar from "./SearchBar";
 import FiltersPrice from "./FiltersPrice";
-import ProductCard from "./ProductCard";
+import ProductCard from "../ProductCard";
 
 const DisplayProduct = ({ whatNewArray }) => {
   console.log(whatNewArray);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AddressCard from "./AddressCard";
-import AddAddressForm from "./AddAddressForm";
+import AddAddressForm from "./MyAccount/AddAddressForm";
 
 function AddressBook() {
   const [mogAddress, setMogAddress] = useState([

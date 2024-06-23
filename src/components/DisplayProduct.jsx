@@ -37,6 +37,8 @@ const DisplayProduct = ({ whatNewArray }) => {
                                 />
                             </div>
                         ))}
+
+                        
                     </div>
                 </div>
             </div>

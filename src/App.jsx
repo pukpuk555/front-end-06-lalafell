@@ -58,19 +58,19 @@ const App = () => {
 
   return (
     <div className="flex flex-col h-screen">
-      {/* <div className="z-50">
+      <div className="z-50">
         <NavbarSection />
-       {/*  <SignInPage/> */}
+        {/* <SignInPage /> */}
       </div>
       <HeroComponent />
       <WhatsNewSection whatNewArray={whatNewArray} />
-      <OurProductSection /> 
+      <OurProductSection />
       <FooterSection />
-      <ContactButton onClick={toggleModal} />
+      {/* <ContactButton onClick={toggleModal} />
       {isModalOpen && <ContactForm onClose={toggleModal} />} */}
-      //<SignUp />
+      {/* <SignUp /> */}
     </div>
-     
+
   );
 };
 export default App;

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import FooterSection from "./components/FooterSection";
-import ContactButton from "./components/ContactButton";
-import ContactForm from "./components/ContactForm";
+import ContactButton from "./components/ContactBotton/ContactButton";
+import ContactForm from "./components/ContactBotton/ContactForm";
 import NavbarSection from "./components/NavbarSection";
-import OurProductSection from "./components/OurProductSection";
-import HeroComponent from "./components/HeroComponent";
-import WhatsNewSection from "./components/WhatsNewSection";
+import OurProductSection from "./components/Home/OurProductSection";
+import HeroComponent from "./components/Home/HeroComponent";
+import WhatsNewSection from "./components/Home/WhatsNewSection";
 
 const App = ({ whatNewArray }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

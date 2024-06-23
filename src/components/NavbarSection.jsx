@@ -29,15 +29,9 @@ const NavbarSection = () => {
             <a href="#" className="py-2 rounded-lg hover:underline">
               Contact Us
             </a>
-            <div className="rounded-lg">
-              <Link
-                //ตรงนี้มอกไว้ก่อน จะเปลี่ยนระหว่าง sign in กับ Account
-                to="/account"
-                className="bg-black text-white py-2 px-4 lg:py-3 lg:px-6 rounded-lg hover:bg-black/80"
-              >
-                Sign In
-              </Link>
-            </div>
+            <Link to="/account" className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80">
+              Sign In
+            </Link>
           </div>
         </div>
       </nav>

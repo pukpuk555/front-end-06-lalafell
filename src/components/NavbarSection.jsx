@@ -23,12 +23,12 @@ const NavbarSection = () => {
             <Link to="/productlist" className="py-2 rounded-lg hover:underline">
               Our Product
             </Link>
-            <a href="#" className="py-2 rounded-lg hover:underline">
+            <Link to="/cart" className="py-2 rounded-lg hover:underline">
               Cart
-            </a>
-            <a href="#" className="py-2 rounded-lg hover:underline">
+            </Link>
+            <Link to="#" className="py-2 rounded-lg hover:underline">
               Contact Us
-            </a>
+            </Link>
             <Link to="/account" className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80">
               Sign In
             </Link>

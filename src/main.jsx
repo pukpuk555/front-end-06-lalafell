@@ -66,9 +66,26 @@ const whatNewArray = [
 
 const AppWrapper = () => {
   const [cart, setCart] = useState([]);
-
   const addToCart = (product, quantity) => {
-    setCart((prevCart) => [...prevCart, { ...product, quantity }]);
+    // Check if the product already exists in the cart
+    const index = cart.findIndex((item) => item.name === product.name);
+
+    if (index !== -1) {
+      // Product already exists in cart, update its quantity
+      const updatedCart = [...cart];
+      updatedCart[index].quantity += quantity;
+      setCart(updatedCart);
+    } else {
+      // Product doesn't exist in cart, add it with the specified quantity
+      setCart((prevCart) => [...prevCart, { ...product, quantity }]);
+    }
+  };
+  const removeFromCart = (product) => {
+    // Filter out the item to be removed based on its name
+    const updatedCart = cart.filter((item) => {
+      return item.name !== product.name;
+    });
+    setCart(updatedCart);
   };
 
   return (
@@ -91,7 +108,10 @@ const AppWrapper = () => {
             <ProductPage whatNewArray={whatNewArray} addToCart={addToCart} />
           }
         />
-        <Route path="/cart" element={<CartPage cart={cart} />} />
+        <Route
+          path="/cart"
+          element={<CartPage cart={cart} removeFromCart={removeFromCart} />}
+        />
         <Route path="/checkout" element={<CheckoutPage />} />
       </Routes>
     </Router>

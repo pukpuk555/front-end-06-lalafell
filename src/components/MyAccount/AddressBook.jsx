@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import AddressCard from "./AddressCard";
-import AddAddressForm from "./MyAccount/AddAddressForm";
+import AddAddressForm from "./AddAddressForm";
 
 function AddressBook() {
   const [mogAddress, setMogAddress] = useState([
@@ -52,9 +52,9 @@ function AddressBook() {
 
   return (
     <div>
-      <div className="w-[700px]">
+      <div className="w-auto mb-[50px]">
         <h2 className="text-4xl font-bold pb-3">Your Account</h2>
-        <div className="w-[700px] h-[450px] px-4  border-[1px] border-black rounded-xl overflow-auto">
+        <div className="lg:w-[700px] w-[500px] md:h-[450px] border-[1px] border-black rounded-xl h-[450px] px-4 overflow-auto">
           <div className="w-full flex justify-between items-center h-[60px] sticky top-0 bg-white">
             <h3 className="text-2xl font-semibold my-3">
               Manage your address book

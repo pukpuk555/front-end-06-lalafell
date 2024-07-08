@@ -29,7 +29,10 @@ const NavbarSection = () => {
             <Link to="#" className="py-2 rounded-lg hover:underline">
               Contact Us
             </Link>
-            <Link to="/account" className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80">
+            <Link
+              to="/account/profile"
+              className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
+            >
               Sign In
             </Link>
           </div>

@@ -82,7 +82,7 @@ const ContactForm = ({ onClose }) => {
 
             <button
               type="submit"
-              className="px-3 md:px-4 py-1.5 md:py-2 mb-3 md:mb-4 bg-black hover:bg-gray-500 text-white rounded float-right"
+              className="px-3 md:px-4 py-1.5 md:py-2 mb-3 md:mb-4 bg-black hover:bg-black/80 text-white rounded float-right"
             >
               Send
             </button>

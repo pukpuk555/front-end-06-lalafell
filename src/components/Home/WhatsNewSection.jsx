@@ -18,7 +18,7 @@ function WhatsNewSection({ whatNewArray }) {
                   name={card.name}
                   img={card.img}
                   price={card.price}
-                  describe={card.describtion}
+                  describe={card.description}
                 />
               </div>
             ))}

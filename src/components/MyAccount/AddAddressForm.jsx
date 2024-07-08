@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-function AddAddressForm({ handleToggle, addAddress }) {
+function AddAddressForm({ handleToggle, addAddress, addressToEdit }) {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [tel, setTel] = useState("");
@@ -9,6 +9,19 @@ function AddAddressForm({ handleToggle, addAddress }) {
   const [district, setDistrict] = useState("");
   const [province, setProvince] = useState("");
   const [postal, setPostal] = useState("");
+
+  useEffect(() => {
+    if (addressToEdit) {
+      setName(addressToEdit.name);
+      setLastName(addressToEdit.lastName);
+      setTel(addressToEdit.tel);
+      setAddress(addressToEdit.address);
+      setSubDistrict(addressToEdit.sub);
+      setDistrict(addressToEdit.district);
+      setProvince(addressToEdit.province);
+      setPostal(addressToEdit.postal);
+    }
+  }, [addressToEdit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -23,6 +36,7 @@ function AddAddressForm({ handleToggle, addAddress }) {
       postal,
     };
     addAddress(newAddress);
+    handleToggle();
     setName("");
     setLastName("");
     setTel("");
@@ -37,7 +51,9 @@ function AddAddressForm({ handleToggle, addAddress }) {
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg w-full max-w-md relative">
         <div className="flex justify-between p-3 bg-black rounded-t-lg">
-          <h3 className="font-bold text-xl text-white">Add Address</h3>
+          <h3 className="font-bold text-xl text-white">
+            {addressToEdit ? "Edit Address" : "Add Address"}
+          </h3>
           <button
             onClick={handleToggle}
             className="font-bold text-xl text-white"
@@ -93,7 +109,7 @@ function AddAddressForm({ handleToggle, addAddress }) {
               className="mt-1 mb-2 rounded-md border-[1px] border-black w-[200px] h-[30px]"
             />
             <div>
-              <label htmlFor="sub" className="font-medium text-lg">
+              <label htmlFor="address" className="font-medium text-lg">
                 Address
               </label>
               <br />
@@ -174,10 +190,10 @@ function AddAddressForm({ handleToggle, addAddress }) {
           </div>
           <button
             type="submit"
-            class="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5"
+            className="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5"
           >
             <div className="Change text-white text-base font-medium font-['Inter'] leading-normal">
-              Submit
+              {addressToEdit ? "Update" : "Submit"}
             </div>
           </button>
         </form>

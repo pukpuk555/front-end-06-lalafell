@@ -27,17 +27,34 @@ function AddressBook() {
       postal: "1234",
     },
   ]);
+
   const [toggleForm, setToggleForm] = useState(false);
-  console.log(mogAddress);
+  const [editingAddress, setEditingAddress] = useState(null);
 
   const addAddress = (newAddress) => {
-    setMogAddress([
-      ...mogAddress,
-      {
-        ...newAddress,
-        id: `a${mogAddress.length + 1}`,
-      },
-    ]);
+    if (editingAddress) {
+      setMogAddress(
+        mogAddress.map((address) =>
+          address.id === editingAddress.id
+            ? { ...newAddress, id: editingAddress.id }
+            : address
+        )
+      );
+      setEditingAddress(null);
+    } else {
+      setMogAddress([
+        ...mogAddress,
+        {
+          ...newAddress,
+          id: `a${mogAddress.length + 1}`,
+        },
+      ]);
+    }
+  };
+
+  const editAddress = (address) => {
+    setEditingAddress(address);
+    setToggleForm(true);
   };
 
   const deleteAddress = (id) => {
@@ -48,6 +65,7 @@ function AddressBook() {
   const handleToggle = (e) => {
     e.preventDefault();
     setToggleForm(!toggleForm);
+    setEditingAddress(null); // Reset editing address when toggling form
   };
 
   return (
@@ -80,13 +98,18 @@ function AddressBook() {
                 province={address.province}
                 postal={address.postal}
                 deleteAddress={deleteAddress}
+                editAddress={editAddress}
               />
             ))}
           </div>
         </div>
       </div>
       {toggleForm && (
-        <AddAddressForm handleToggle={handleToggle} addAddress={addAddress} />
+        <AddAddressForm
+          handleToggle={handleToggle}
+          addAddress={addAddress}
+          addressToEdit={editingAddress}
+        />
       )}
     </div>
   );

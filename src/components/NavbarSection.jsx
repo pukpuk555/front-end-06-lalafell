@@ -41,21 +41,21 @@ const NavbarSection = () => {
       {/* for mobile */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 shadow-lg z-50">
         <ul className="flex justify-around py-4">
-          <a href="#">
+          <Link to="/">
             <FaHome className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/productlist">
             <FaSearch className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/cart">
             <FaShoppingCart className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <FaBell className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/login">
             <FaUserCircle className="h-6 w-6" />
-          </a>
+          </Link>
         </ul>
       </nav>
     </div>

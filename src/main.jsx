@@ -12,6 +12,7 @@ import ProfileCard from "./components/MyAccount/ProfileCard.jsx";
 import AddressBook from "./components/MyAccount/AddressBook.jsx";
 import CrediCardList from "./components/MyAccount/CrediCardList.jsx";
 import OrderHistory from "./components/MyAccount/OrderHistory.jsx";
+import SignIn from "./page/SignInPage.jsx";
 
 const whatNewArray = [
   {
@@ -80,13 +81,6 @@ const AppWrapper = () => {
       setCart((prevCart) => [...prevCart, { ...product, quantity }]);
     }
   };
-  const removeFromCart = (product) => {
-    // Filter out the item to be removed based on its name
-    const updatedCart = cart.filter((item) => {
-      return item.name !== product.name;
-    });
-    setCart(updatedCart);
-  };
 
   return (
     <Router>
@@ -110,9 +104,10 @@ const AppWrapper = () => {
         />
         <Route
           path="/cart"
-          element={<CartPage cart={cart} removeFromCart={removeFromCart} />}
+          element={<CartPage cart={cart} setCart={setCart} />}
         />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/login" element={<SignIn />} />
       </Routes>
     </Router>
   );

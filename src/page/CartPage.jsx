@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
 
-function CartPage({ cart, removeFromCart }) {
-  const [cartItems, setCartItems] = useState(cart); // State to manage cart items
+function CartPage({ cart, setCart }) {
   const [selectedItems, setSelectedItems] = useState({}); // State to manage selected items
 
   // Ensure the price is a number
@@ -15,22 +14,20 @@ function CartPage({ cart, removeFromCart }) {
 
   // Function to handle quantity change
   const handleQuantityChange = (item, newQuantity) => {
-    const updatedCart = cartItems.map((cartItem) =>
+    const updatedCart = cart.map((cartItem) =>
       cartItem.name === item.name
         ? { ...cartItem, quantity: newQuantity }
         : cartItem
     );
-    setCartItems(updatedCart);
+    setCart(updatedCart);
   };
 
-  const handleDelete = (item) => {
-    const updatedCart = removeFromCart(item);
-    setCartItems(updatedCart);
-    setSelectedItems((prevSelectedItems) => {
-      const newSelectedItems = { ...prevSelectedItems };
-      delete newSelectedItems[item.name];
-      return newSelectedItems;
+  const removeFromCart = (product) => {
+    // Filter out the item to be removed based on its name
+    const updatedCart = cart.filter((item) => {
+      return item.name !== product.name;
     });
+    setCart(updatedCart);
   };
 
   const handleSelectItem = (item) => {
@@ -42,7 +39,7 @@ function CartPage({ cart, removeFromCart }) {
 
   // Calculate total price for selected items
   const getTotalPrice = () => {
-    return cartItems.reduce((total, item) => {
+    return cart.reduce((total, item) => {
       if (selectedItems[item.name]) {
         const itemPrice = parsePrice(item.price);
         return total + itemPrice * item.quantity;
@@ -56,11 +53,11 @@ function CartPage({ cart, removeFromCart }) {
       <NavbarSection />
       <div className="container mx-auto mt-[100px] md:mt-[130px] flex-grow">
         <h1 className="text-5xl font-bold mb-4">Cart</h1>
-        {cartItems.length === 0 ? (
+        {cart.length === 0 ? (
           <p>Your cart is empty.</p>
         ) : (
           <div>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto md:block hidden">
               <table className="min-w-full">
                 <thead>
                   <tr>
@@ -73,7 +70,7 @@ function CartPage({ cart, removeFromCart }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItems.map((item, index) => (
+                  {cart.map((item, index) => (
                     <tr key={index} className="border-t">
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
@@ -131,7 +128,7 @@ function CartPage({ cart, removeFromCart }) {
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
                           <button
-                            onClick={() => handleDelete(item)}
+                            onClick={() => removeFromCart(item)}
                             className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                           >
                             Delete
@@ -143,6 +140,68 @@ function CartPage({ cart, removeFromCart }) {
                 </tbody>
               </table>
             </div>
+            <div className="md:hidden block">
+              {cart.map((item, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between border-t border-b py-2 w-full"
+                >
+                  <div className="flex items-center w-full">
+                    <div className="flex justify-center p-3">
+                      <input
+                        type="checkbox"
+                        checked={selectedItems[item.name] || false}
+                        onChange={() => handleSelectItem(item)}
+                      />
+                    </div>
+                    <img
+                      src={item.img}
+                      alt={item.name}
+                      className="w-20 h-20 mr-4"
+                    />
+                    <div className="flex justify-between w-full items-center">
+                      <div className="flex flex-col gap-3">
+                        <p className="font-bold text-lg">{item.name}</p>
+                        <p className="font-bold">{item.description}</p>
+                        <div className="flex">
+                          <button
+                            onClick={() =>
+                              handleQuantityChange(item, item.quantity - 1)
+                            }
+                            className="border px-2 font-bold text-white bg-black rounded-l-md"
+                            disabled={item.quantity <= 1}
+                          >
+                            -
+                          </button>
+                          <p className="border md:px-4 px-1 font-bold">
+                            {item.quantity}
+                          </p>
+                          <button
+                            onClick={() =>
+                              handleQuantityChange(item, item.quantity + 1)
+                            }
+                            className="border px-2 font-bold text-white bg-black rounded-r-md"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+                      <div className="flex flex-col gap-3 justify-between py-3">
+                        <button
+                          onClick={() => removeFromCart(item)}
+                          className="bg-red-500 hover:bg-red-700 text-white text-sm font-semibold px-4 rounded"
+                        >
+                          Delete
+                        </button>
+                        <p className="font-semibold">
+                          ${parsePrice(item.price).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
             <div className="flex flex-col md:flex-row justify-end mt-4 items-center">
               <div className="flex flex-col items-center justify-center w-[300px] gap-3">
                 <p className="font-bold text-xl">
@@ -151,11 +210,9 @@ function CartPage({ cart, removeFromCart }) {
                 <Link
                   to="/checkout"
                   state={{
-                    cartItems: cartItems.filter(
-                      (item) => selectedItems[item.name]
-                    ),
+                    cart: cart.filter((item) => selectedItems[item.name]),
                   }}
-                  className={`bg-black hover:bg-gray-800 text-white font-bold py-2 px-4 rounded ${
+                  className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 w-full flex justify-center rounded ${
                     Object.keys(selectedItems).length === 0
                       ? "opacity-50 cursor-not-allowed"
                       : ""

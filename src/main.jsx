@@ -8,6 +8,11 @@ import OurProduct from "./page/OurProduct.jsx";
 import ProductPage from "./page/ProductPage.jsx";
 import CartPage from "./page/CartPage.jsx";
 import CheckoutPage from "./page/CheckOutPage.jsx";
+import ProfileCard from "./components/MyAccount/ProfileCard.jsx";
+import AddressBook from "./components/MyAccount/AddressBook.jsx";
+import CrediCardList from "./components/MyAccount/CrediCardList.jsx";
+import OrderHistory from "./components/MyAccount/OrderHistory.jsx";
+import SignIn from "./page/SignInPage.jsx";
 
 const whatNewArray = [
   {
@@ -60,29 +65,52 @@ const whatNewArray = [
   },
 ];
 
-
 const AppWrapper = () => {
   const [cart, setCart] = useState([]);
-
   const addToCart = (product, quantity) => {
-    setCart((prevCart) => [...prevCart, { ...product, quantity }]);
+    // Check if the product already exists in the cart
+    const index = cart.findIndex((item) => item.name === product.name);
+
+    if (index !== -1) {
+      // Product already exists in cart, update its quantity
+      const updatedCart = [...cart];
+      updatedCart[index].quantity += quantity;
+      setCart(updatedCart);
+    } else {
+      // Product doesn't exist in cart, add it with the specified quantity
+      setCart((prevCart) => [...prevCart, { ...product, quantity }]);
+    }
   };
 
   return (
     <Router>
       <Routes>
         <Route path="/" element={<App whatNewArray={whatNewArray} />} />
-        <Route path="/productlist" element={<OurProduct whatNewArray={whatNewArray} />} />
-        <Route path="/account" element={<AccountPage />} />
+        <Route
+          path="/productlist"
+          element={<OurProduct whatNewArray={whatNewArray} />}
+        />
+        <Route path="/account" element={<AccountPage />}>
+          <Route path="profile" element={<ProfileCard />} />
+          <Route path="address" element={<AddressBook />} />
+          <Route path="payment" element={<CrediCardList />} />
+          <Route path="order" element={<OrderHistory />} />
+        </Route>
         <Route
           path="/product/:productName"
-          element={<ProductPage whatNewArray={whatNewArray} addToCart={addToCart} />}
+          element={
+            <ProductPage whatNewArray={whatNewArray} addToCart={addToCart} />
+          }
         />
-        <Route path="/cart" element={<CartPage cart={cart} />} />
+        <Route
+          path="/cart"
+          element={<CartPage cart={cart} setCart={setCart} />}
+        />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/login" element={<SignIn />} />
       </Routes>
     </Router>
   );
 };
 
-ReactDOM.createRoot(document.getElementById('root')).render(<AppWrapper />);
+ReactDOM.createRoot(document.getElementById("root")).render(<AppWrapper />);

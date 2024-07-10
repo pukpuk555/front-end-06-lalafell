@@ -6,8 +6,9 @@ import AddressSection from '@/components/CheckOut/AddressSection';
 import OrderList from '@/components/CheckOut/OrderList';
 import PaymentMethod from '@/components/CheckOut/PaymentMethod';
 import SummarySection from '@/components/CheckOut/SummarySection';
+import OrderDetails from '@/components/PaymentStatus/OrderDetails';
 
-function CheckoutPage() {
+function PaymentStatusPage() {
   const location = useLocation();
   const selectedItems = location.state?.selectedItems || [];
 
@@ -46,32 +47,14 @@ function CheckoutPage() {
         <OrderList items={selectedItems} />
         <PaymentMethod />
         <SummarySection items={selectedItems} />
-        <div className="flex justify-center md:justify-end my-4">
-          <Link to="/status">
-            <button /* onClick={handlePurchase} */ className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full md:w-auto">
-              Purchase
-            </button>
-          </Link>
-        </div>
+        <OrderDetails />
       </div>
       <FooterSection />
     </div>
   );
 }
 
-export default CheckoutPage;
-
-
-
-
-
-
-
-
-
-
-
-
+export default PaymentStatusPage;
 
 
 

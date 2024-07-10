@@ -1,5 +1,5 @@
 import React from "react";
-import SignIn from "@/components/SignIn/signIn";
+import SignUp from "@/components/SignIn/signUp";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
 
@@ -9,7 +9,7 @@ function SignInPage() {
       <NavbarSection />
       <div className="h-[80px] md:h-[100px]"></div>
       <div className="flex-grow flex items-center justify-center">
-        <SignIn />
+        <SignUp />
       </div>
       <FooterSection />
     </div>
@@ -17,4 +17,3 @@ function SignInPage() {
 }
 
 export default SignInPage;
-

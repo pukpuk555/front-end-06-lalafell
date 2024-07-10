@@ -45,10 +45,10 @@ const NavbarSection = () => {
               Contact Us
             </Link>
             <Link
-              to={isLoggedIn ? "/account" : "/signin"}
-              className="bg-black text-white py-2 px-4 rounded-lg hover:bg-black/80"
+              to="/account/profile"
+              className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
             >
-              {isLoggedIn ? "My Account" : "Sign In"}
+              Sign In
             </Link>
           </div>
         </div>

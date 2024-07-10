@@ -9,7 +9,7 @@ function OrderHistory() {
       name: "Kimetsu no Yaiba Custom",
       description: "Reference from popular animation",
       img: "/kimetsu_no.png",
-      price: "$10.99",
+      price: 10.99,
       status: "Recieved",
     },
     {
@@ -17,7 +17,7 @@ function OrderHistory() {
       name: "Lupan The 3rd Custom",
       description: "Reference from popular animation",
       img: "/lupin.png",
-      price: "$10.99",
+      price: 10.99,
       status: "Pending",
     },
     {
@@ -25,7 +25,7 @@ function OrderHistory() {
       name: "Doreaman Custom",
       description: "Reference from popular animation",
       img: "/doremon.png",
-      price: "$10.99",
+      price: 10.99,
       status: "Shiping",
     },
     {
@@ -33,7 +33,7 @@ function OrderHistory() {
       name: "Harry Poster Custom",
       description: "Reference from popular animation",
       img: "/harry.png",
-      price: "$10.99",
+      price: 10.99,
       status: "To Ship",
     },
   ];
@@ -43,41 +43,41 @@ function OrderHistory() {
   const recievedOrder = order.filter((order) => order.status === "Recieved");
 
   return (
-    <div>
-      <div className="w-[700px]">
+    <div className="p-4 w-auto">
+      <div className="w-full max-w-2xl mx-auto mb-12">
         <h2 className="text-4xl font-bold pb-3">Your Order</h2>
-        <div className="w-[700px] h-[450px] px-4  border-[1px] border-black rounded-xl overflow-auto flex flex-col items-center ">
-          <Tabs defaultValue="yourOrder" className="w-full ">
-            <TabsList className="flex justify-between bg-white sticky top-0 border-b-[1px] border-black rounded-none mt-[3px]">
+        <div className="lg:w-[700px] w-[500px] h-[450px] md:flex border-[1px] border-black rounded-xl overflow-auto">
+          <Tabs defaultValue="yourOrder" className="w-full">
+            <TabsList className="flex justify-between bg-white sticky top-0 border-b border-black rounded-none">
               <TabsTrigger
                 value="yourOrder"
-                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
+                className="w-1/5 text-xl border-x border-t border-black rounded-b-none"
               >
                 Your Order
               </TabsTrigger>
               <TabsTrigger
                 value="pending"
-                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
+                className="w-1/5 text-xl border-x border-t border-black rounded-b-none"
               >
                 Pending
               </TabsTrigger>
               <TabsTrigger
                 value="toShip"
-                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
+                className="w-1/5 text-xl border-x border-t border-black rounded-b-none"
               >
                 To Ship
               </TabsTrigger>
               <TabsTrigger
                 value="shiping"
-                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
+                className="w-1/5 text-xl border-x border-t border-black rounded-b-none"
               >
                 Shiping
               </TabsTrigger>
               <TabsTrigger
                 value="recived"
-                className="w-1/4 text-xl focus:border-x-[1px] focus:border-t-[1px] border-black rounded-b-none"
+                className="w-1/5 text-xl border-x border-t border-black rounded-b-none"
               >
-                Recived
+                Recieved
               </TabsTrigger>
             </TabsList>
             <TabsContent value="yourOrder">

@@ -23,13 +23,16 @@ const NavbarSection = () => {
             <Link to="/productlist" className="py-2 rounded-lg hover:underline">
               Our Product
             </Link>
-            <a href="#" className="py-2 rounded-lg hover:underline">
+            <Link to="/cart" className="py-2 rounded-lg hover:underline">
               Cart
-            </a>
-            <a href="#" className="py-2 rounded-lg hover:underline">
+            </Link>
+            <Link to="#" className="py-2 rounded-lg hover:underline">
               Contact Us
-            </a>
-            <Link to="/account" className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80">
+            </Link>
+            <Link
+              to="/account/profile"
+              className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
+            >
               Sign In
             </Link>
           </div>
@@ -38,21 +41,21 @@ const NavbarSection = () => {
       {/* for mobile */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-300 shadow-lg z-50">
         <ul className="flex justify-around py-4">
-          <a href="#">
+          <Link to="/">
             <FaHome className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/productlist">
             <FaSearch className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/cart">
             <FaShoppingCart className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="#">
             <FaBell className="h-6 w-6" />
-          </a>
-          <a href="#">
+          </Link>
+          <Link to="/login">
             <FaUserCircle className="h-6 w-6" />
-          </a>
+          </Link>
         </ul>
       </nav>
     </div>

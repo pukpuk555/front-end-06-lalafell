@@ -2,7 +2,7 @@ import React from "react";
 
 function OrderCard({ name, des, price, img, status }) {
   return (
-    <div className="w-full h-[100px] rounded-xl border-[1px] border-black py-2 px-6 mb-3">
+    <div className=" h-[100px] rounded-xl border-[1px] border-black py-2 px-6 mb-3 mx-4">
       <div className="flex items-center justify-between h-full">
         <div className="flex items-center gap-3 m-3">
           <div className="w-[80px] h-[80px]">
@@ -18,7 +18,7 @@ function OrderCard({ name, des, price, img, status }) {
             <h2 className="font-bold text-xl">{status}</h2>
           </div>
           <div>
-            <p>Price:{price} </p>
+            <p>Price: ${price} </p>
           </div>
         </div>
       </div>

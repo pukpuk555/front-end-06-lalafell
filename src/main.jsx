@@ -91,9 +91,12 @@ const AppWrapper = () => {
     <Router>
       <Routes>
         <Route path="/" element={<App whatNewArray={whatNewArray} />} />
-        <Route path="/signin" element={<SignInPage/>} />
-        <Route path="/signup" element={<SignUpPage/>} />
-        <Route path="/ForgotEmailorPassword" element={<ForgotEmailorPassword/>} />
+        <Route path="/signin" element={<SignInPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route
+          path="/ForgotEmailorPassword"
+          element={<ForgotEmailorPassword />}
+        />
         <Route
           path="/productlist"
           element={<OurProduct whatNewArray={whatNewArray} />}
@@ -115,8 +118,8 @@ const AppWrapper = () => {
           element={<CartPage cart={cart} setCart={setCart} />}
         />
         <Route path="/checkout" element={<CheckoutPage />} />
-        <Route path="/status"element={<PaymentStatusPage />} />
-        <Route path: "/admin"element: <AddNewProduct />
+        <Route path="/status" element={<PaymentStatusPage />} />
+        <Route path="/admin" element={<AddNewProduct />} />
       </Routes>
     </Router>
   );

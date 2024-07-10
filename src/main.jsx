@@ -8,6 +8,11 @@ import OurProduct from "./page/OurProduct.jsx";
 import ProductPage from "./page/ProductPage.jsx";
 import CartPage from "./page/CartPage.jsx";
 import CheckoutPage from "./page/CheckOutPage.jsx";
+import SignInPage from "./page/SignInPage.jsx";
+import SignUpPage from "./page/SignUpPage.jsx";
+import ForgotEmailorPassword from "./components/SignIn/ForgotEmailorPassword.jsx";
+import PaymentStatusPage from "./page/PaymentStatusPage.jsx";
+
 
 const whatNewArray = [
   {
@@ -74,12 +79,17 @@ const AppWrapper = () => {
         <Route path="/" element={<App whatNewArray={whatNewArray} />} />
         <Route path="/productlist" element={<OurProduct whatNewArray={whatNewArray} />} />
         <Route path="/account" element={<AccountPage />} />
+        <Route path="/signin" element={<SignInPage/>} />
+        <Route path="/signup" element={<SignUpPage/>} />
+        <Route path="/ForgotEmailorPassword" element={<ForgotEmailorPassword/>} />
         <Route
           path="/product/:productName"
           element={<ProductPage whatNewArray={whatNewArray} addToCart={addToCart} />}
         />
         <Route path="/cart" element={<CartPage cart={cart} />} />
         <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/status"element={<PaymentStatusPage />} />
+
       </Routes>
     </Router>
   );

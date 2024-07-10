@@ -54,7 +54,9 @@ function CartPage({ cart, setCart }) {
       <div className="container mx-auto mt-[100px] md:mt-[130px] flex-grow">
         <h1 className="text-5xl font-bold mb-4">Cart</h1>
         {cart.length === 0 ? (
-          <p>Your cart is empty.</p>
+          <div>
+            <p className="text-2xl">Your cart is empty.</p>
+          </div>
         ) : (
           <div>
             <div className="overflow-x-auto md:block hidden">

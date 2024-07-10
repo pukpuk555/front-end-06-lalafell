@@ -5,6 +5,7 @@ import "./index.css";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import AccountPage from "./page/AccountPage";
 import OurProduct from "./page/OurProduct.jsx";
+import AddNewProduct from "./components/Admin/AddNewProduct.jsx";
 
 const whatNewArray = [
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
   {
     path: "/account",
     element: <AccountPage />,
+  },
+  {
+    path: "/admin",
+    element: <AddNewProduct />,
   },
 ]);
 

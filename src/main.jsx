@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import "./index.css";
 import AccountPage from "./page/AccountPage";
 import OurProduct from "./page/OurProduct.jsx";
+import AddNewProduct from "./components/Admin/AddNewProduct.jsx";
 import ProductPage from "./page/ProductPage.jsx";
 import CartPage from "./page/CartPage.jsx";
 import CheckoutPage from "./page/CheckOutPage.jsx";
@@ -115,7 +116,7 @@ const AppWrapper = () => {
         />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/status"element={<PaymentStatusPage />} />
-
+        <Route path: "/admin"element: <AddNewProduct />
       </Routes>
     </Router>
   );

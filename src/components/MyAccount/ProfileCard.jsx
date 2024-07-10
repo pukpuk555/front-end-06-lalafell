@@ -22,7 +22,7 @@ function ProfileCard() {
   return (
     <div className="w-auto mb-[50px]">
       <h2 className="text-4xl font-bold pb-3">Your Account</h2>
-      <div className=" md:w- lg:w-[700px] w-[500px] md:h-[450px] md:flex  border-[1px] border-black rounded-xl">
+      <div className="lg:w-[700px] w-[500px] md:h-[450px] md:flex border-[1px] border-black rounded-xl">
         <div className="md:w-2/5 flex flex-col items-center">
           <img
             src="/defaultAccount.png"

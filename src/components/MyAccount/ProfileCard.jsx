@@ -69,7 +69,11 @@ function ProfileCard() {
       <div className="lg:w-[700px] w-[500px] md:h-[450px] md:flex border-[1px] border-black rounded-xl">
         <div className="md:w-2/5 flex flex-col items-center">
           <img
-            src="/defaultAccount.png"
+            src={
+              profile.img
+                ? profile.img.url || "/defaultAccount.png"
+                : "/defaultAccount.png"
+            }
             alt="profile"
             className="mt-10 w-[150px] h-[150px] rounded-xl"
           />

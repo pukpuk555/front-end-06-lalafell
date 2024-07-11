@@ -3,8 +3,26 @@ import AccountNav from "@/components/MyAccount/AccountNav";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
 import { Outlet } from "react-router-dom";
+import axiosInstance from "@/utils/axiosInstance";
 
 function AccountPage() {
+  const [profile, setProfile] = React.useState({});
+  const [orders, setOrders] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axiosInstance.get("/profile");
+        if (response.data) {
+          setProfile(response.data.myUser);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <div className="z-50">

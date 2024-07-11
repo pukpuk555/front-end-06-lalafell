@@ -2,7 +2,7 @@
 const AdminNavbar = () => {
 
     return (
-        <div className="navbar py-8 shadow-lg">
+        <div className="navbar py-8 fixed top-0 left-0 right-0 bg-white z-50 shadow-lg">
             <div className="flex-1  ml-10">
                 <a className="text-3xl font-bold mx-2">Lalafell Keyboard</a>
             </div>

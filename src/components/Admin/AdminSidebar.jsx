@@ -10,8 +10,8 @@ const AdminSidebar = () => {
 
     return (
         <div className="shadow-lg ">
-            <div className={nav ? 'fixed flex-col top-32 left-0 w-[300px] h-full bg-white z-10 duration-300' : 'fixed top-32 left-[-250px] w-[300px] h-screen bg-white z-10 duration-300'}>
-                <CiCircleChevRight onClick={() => setNav(!nav)} className='absolute right-[-30px] top-4 cursor-pointer text-3xl hover:bg-black hover:text-white hover:rounded-full' />
+            <div className={nav ? 'fixed flex-col top-40 left-0 w-[300px] h-full bg-white z-10 duration-300' : 'fixed top-40 left-[-250px] w-[300px] h-screen bg-white z-10 duration-300'}>
+                <CiCircleChevRight onClick={() => setNav(!nav)} className='absolute right-[-30px] top-4 cursor-pointer text-4xl hover:bg-black hover:text-white hover:rounded-full' />
                 <nav>
                     <ul className='flex flex-col pl-16 pr-10  my-2'>
                         <li className='text-xl font-bold px-2 py-2 gap-2 flex items-center cursor-pointer hover:bg-base-200 rounded-lg' onClick={() => setDropdownOpen(!dropdownOpen)}>
@@ -21,8 +21,9 @@ const AdminSidebar = () => {
                         </li>
                         {dropdownOpen && (
                             <ul className=''>
-                                <li className='text-lg py-2 pl-10 rounded-lg hover:bg-base-200'>My Order</li>
-                                <li className='text-lg py-2 pl-10 rounded-lg hover:bg-base-200'>Mass Ship</li>
+                                <li className='text-lg py-2 pl-10 rounded-lg hover:bg-base-200'>
+                                    <Link to="/admin/my-orders">My Order</Link>
+                                </li>
                                 <li className='text-lg py-2 pl-10 rounded-lg hover:bg-base-200'>Cancellation</li>
                             </ul>
                         )}

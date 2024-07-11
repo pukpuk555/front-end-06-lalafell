@@ -29,7 +29,7 @@ const AddNewProduct = () => {
     };
 
     return (
-        <div className="container mx-auto mt-40 w-[1024px] p-4">
+        <div className="container mx-auto mt-40 w-[60%] p-4">
             <h1 className="text-2xl font-bold mb-4">Add a New Product</h1>
             <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="mb-4">

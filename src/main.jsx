@@ -18,6 +18,7 @@ import AddressBook from "./components/MyAccount/AddressBook.jsx";
 import CrediCardList from "./components/MyAccount/CrediCardList.jsx";
 import OrderHistory from "./components/MyAccount/OrderHistory.jsx";
 import SignIn from "./page/SignInPage.jsx";
+import AdminDashboard from "./components/Admin/AdminDashboard.jsx"
 
 const whatNewArray = [
   {
@@ -119,7 +120,9 @@ const AppWrapper = () => {
         />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/status" element={<PaymentStatusPage />} />
-        <Route path="/admin" element={<AddNewProduct />} />
+        <Route path="/admin" element={<AdminDashboard />}>
+          <Route path="add-new-product" element={<AddNewProduct />} />
+        </Route>
       </Routes>
     </Router>
   );

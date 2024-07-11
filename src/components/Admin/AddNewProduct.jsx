@@ -2,13 +2,12 @@ import React, { useState } from 'react';
 
 const AddNewProduct = () => {
     const [productImages, setProductImages] = useState([]);
-    const [selectedAspectRatio, setSelectedAspectRatio] = useState("1:1"); // เลือก 1:1 เป็นค่าเริ่มต้น
-
+    const [selectedAspectRatio, setSelectedAspectRatio] = useState("1:1");
     const handleImageUpload = (event) => {
         const files = Array.from(event.target.files);
         const images = files.map((file) => ({
             url: URL.createObjectURL(file),
-            aspectRatio: selectedAspectRatio // เก็บขนาดภาพที่เลือกไว้ด้วย
+            aspectRatio: selectedAspectRatio
         }));
         setProductImages([...productImages, ...images]);
     };
@@ -18,7 +17,7 @@ const AddNewProduct = () => {
     };
 
     return (
-        <div className="container mx-auto p-4">
+        <div className="container mx-auto w-[1024px] p-4">
             <h1 className="text-2xl font-bold mb-4">Add a New Product</h1>
             <div className="bg-white p-6 rounded-lg shadow-md">
                 <div className="mb-4">

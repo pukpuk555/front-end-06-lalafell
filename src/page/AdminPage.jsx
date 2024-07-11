@@ -1,11 +1,9 @@
 // AdminDashboard.js
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import AdminNavbar from './AdminNavbar';
-import AdminSidebar from './AdminSidebar';
-import LineChartDashboard from './LineChartDashboard';
-import Barchart from './BarChart';
-import StatisticsCard from './StatisticsCard';
+import AdminNavbar from '../components/Admin/AdminNavbar';
+import AdminSidebar from '../components/Admin/AdminSidebar';
+
 
 
 const AdminDashboard = () => {
@@ -15,9 +13,6 @@ const AdminDashboard = () => {
             <div className="flex-grow">
                 <AdminNavbar />
                 <div className="flex justify-center items-center flex-col mx-auto">
-                    <StatisticsCard />
-                    <LineChartDashboard />
-                    <Barchart />
                 </div>
                 <div>
                     <Outlet />

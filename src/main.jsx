@@ -18,9 +18,9 @@ import AddressBook from "./components/MyAccount/AddressBook.jsx";
 import CrediCardList from "./components/MyAccount/CrediCardList.jsx";
 import OrderHistory from "./components/MyAccount/OrderHistory.jsx";
 import SignIn from "./page/SignInPage.jsx";
-import AdminDashboard from "./components/Admin/AdminDashboard.jsx"
+import AdminPage from "./page/AdminPage.jsx"
 import MyOrders from "./components/Admin/MyOrders.jsx";
-
+import Dashboard from "./components/Admin/Dashboard.jsx";
 const whatNewArray = [
   {
     name: "Kimetsu no Yaiba Custom",
@@ -121,7 +121,8 @@ const AppWrapper = () => {
         />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/status" element={<PaymentStatusPage />} />
-        <Route path="/admin" element={<AdminDashboard />}>
+        <Route path="/admin" element={<AdminPage />}>
+          <Route path="Dashboard" element={<Dashboard />} />
           <Route path="add-new-product" element={<AddNewProduct />} />
           <Route path="my-orders" element={<MyOrders />} />
         </Route>

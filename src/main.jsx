@@ -17,7 +17,6 @@ import ProfileCard from "./components/MyAccount/ProfileCard.jsx";
 import AddressBook from "./components/MyAccount/AddressBook.jsx";
 import CrediCardList from "./components/MyAccount/CrediCardList.jsx";
 import OrderHistory from "./components/MyAccount/OrderHistory.jsx";
-import SignInPage from "./page/SignInPage.jsx";
 
 const whatNewArray = [
   {

@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import React, { useEffect, useState } from "react";
 import {
   FaHome,
   FaSearch,
@@ -6,22 +7,37 @@ import {
   FaBell,
   FaUserCircle,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const NavbarSection = () => {
   const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // Replace with actual authentication logic
+  const [admin, setAdmin] = useState(false);
+  const isToken = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  const handleUserMenuToggle = () => {
-    setUserMenuOpen(!userMenuOpen);
+  useEffect(() => {
+    getUserData();
+  }, []);
+
+  const getUserData = async () => {
+    try {
+      const response = await axiosInstance.get("/profile");
+      if (response.data) {
+        setAdmin(response.data.myUser.isAdmin);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleLogout = () => {
-    // Add your logout logic here
-    // Example: Clear tokens, update authentication state
-    setIsLoggedIn(false);
-    setUserMenuOpen(false);
+    localStorage.clear();
     console.log("User logged out");
+    navigate("/");
+  };
+
+  const handleUserMenuToggle = () => {
+    setUserMenuOpen(!userMenuOpen);
   };
 
   return (
@@ -44,12 +60,29 @@ const NavbarSection = () => {
             <Link to="#" className="py-2 rounded-lg hover:underline">
               Contact Us
             </Link>
-            <Link
-              to="/account/profile"
-              className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
-            >
-              Sign In
-            </Link>
+            {!isToken ? (
+              <Link
+                to="/signin"
+                className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
+              >
+                Sign In
+              </Link>
+            ) : (
+              <Link
+                to="/account/profile"
+                className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
+              >
+                Profile
+              </Link>
+            )}
+            {admin && (
+              <Link
+                to="/admin"
+                className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
+              >
+                Admin
+              </Link>
+            )}
           </div>
         </div>
       </nav>
@@ -74,7 +107,10 @@ const NavbarSection = () => {
         </ul>
       </nav>
       {userMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-25 z-40" onClick={handleUserMenuToggle}></div>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-25 z-40"
+          onClick={handleUserMenuToggle}
+        ></div>
       )}
       <div
         className={`fixed right-0 bottom-20 bg-white shadow-lg rounded-lg p-4 z-50 ${
@@ -82,36 +118,59 @@ const NavbarSection = () => {
         }`}
       >
         <ul>
-          {!isLoggedIn ? (
+          {!isToken ? (
             <li>
-              <Link to="/signin" className="block py-2" onClick={handleUserMenuToggle}>
+              <Link
+                to="/signin"
+                className="block py-2"
+                onClick={handleUserMenuToggle}
+              >
                 Sign In
               </Link>
             </li>
           ) : (
             <>
               <li>
-                <Link to="/profile" className="block py-2" onClick={handleUserMenuToggle}>
+                <Link
+                  to="/account/profile"
+                  className="block py-2"
+                  onClick={handleUserMenuToggle}
+                >
                   Your Profile
                 </Link>
               </li>
               <li>
-                <Link to="/addressbook" className="block py-2" onClick={handleUserMenuToggle}>
+                <Link
+                  to="/account/address"
+                  className="block py-2"
+                  onClick={handleUserMenuToggle}
+                >
                   Manage Addressbook
                 </Link>
               </li>
               <li>
-                <Link to="/creditcard" className="block py-2" onClick={handleUserMenuToggle}>
+                <Link
+                  to="/account/payment"
+                  className="block py-2"
+                  onClick={handleUserMenuToggle}
+                >
                   Credit/Debit Card
                 </Link>
               </li>
               <li>
-                <Link to="/orders" className="block py-2" onClick={handleUserMenuToggle}>
+                <Link
+                  to="/account/order"
+                  className="block py-2"
+                  onClick={handleUserMenuToggle}
+                >
                   Your Order
                 </Link>
               </li>
               <li>
-                <button onClick={handleLogout} className="block py-2 w-full text-left">
+                <button
+                  onClick={handleLogout}
+                  className="block py-2 w-full text-left"
+                >
                   Log Out
                 </button>
               </li>
@@ -124,5 +183,3 @@ const NavbarSection = () => {
 };
 
 export default NavbarSection;
-
-

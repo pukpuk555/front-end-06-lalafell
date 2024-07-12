@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "@/utils/axiosInstance";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -8,45 +9,72 @@ const SignUp = () => {
   const [createPassword, setCreatePassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
-  const [userPhoto, setUserPhoto] = useState(null); // State to store user photo
+  const [userPhoto, setUserPhoto] = useState(null);
+  const [formError, setFormError] = useState("");
+
+  const navigate = useNavigate();
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
-    setUserPhoto(file);
+    if (file) {
+      setUserPhoto({
+        file: file,
+        url: URL.createObjectURL(file),
+      });
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (createPassword !== confirmPassword) {
       setPasswordError("Passwords do not match");
-    } else {
-      setPasswordError("");
-      const formData = {
-        firstName,
-        lastName,
-        email,
-        createPassword,
-        confirmPassword,
-        userPhoto, // Include user photo in form data
-      };
-      console.log("Form Data Submitted:", formData);
-      // Add form submission logic here
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append("firstName", firstName);
+      formData.append("lastName", lastName);
+      formData.append("email", email);
+      formData.append("password", createPassword);
+      if (userPhoto && userPhoto.file) {
+        formData.append("img", userPhoto.file);
+      }
+
+      const response = await axiosInstance.post("/register", formData, {
+        timeout: 1000000,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.data && !response.data.error) {
+        console.log(response.data);
+        navigate("/signin");
+      }
+    } catch (err) {
+      setFormError(err.response?.data?.message || "An error occurred");
+      console.log(err);
     }
   };
 
   return (
-    <div className="flex flex-col  items-center justify-center md:pb-10 md:pt-14" >
+    <div className="flex flex-col  items-center justify-center md:pb-10 md:pt-14">
       <div className="bg-white md:rounded-lg md:shadow-lg w-full max-w-md p-6 md:border md:border-gray-300">
         <form onSubmit={handleSubmit}>
           <div className="flex justify-center relative my-5">
             <div className="relative w-32 h-32">
               <img
-                src={userPhoto ? URL.createObjectURL(userPhoto) : "./profile-icon-png-898.png"}
+                src={userPhoto ? userPhoto.url : "./profile-icon-png-898.png"}
                 className="w-full h-full rounded-full border border-gray-300 bg-gray-300"
                 alt="User Photo"
               />
               <div className="absolute inset-0 flex items-end justify-end">
-                <label htmlFor="imageAdd-btn" className="bg-gray-200 rounded-full p-2 cursor-pointer flex ">
+                <label
+                  htmlFor="imageAdd-btn"
+                  className="bg-gray-200 rounded-full p-2 cursor-pointer flex "
+                >
                   📸
                 </label>
                 <input
@@ -59,11 +87,15 @@ const SignUp = () => {
                 />
               </div>
             </div>
-
           </div>
           <h2 className="text-3xl font-bold text-center">Sign up</h2>
-          <h3 className="text-xl text-center pt-2">Enter your email to sign up for this app</h3>
-          <label htmlFor="firstName" className="block text-lg font-medium text-gray-700 mt-4">
+          <h3 className="text-xl text-center pt-2">
+            Enter your email to sign up for this app
+          </h3>
+          <label
+            htmlFor="firstName"
+            className="block text-lg font-medium text-gray-700 mt-4"
+          >
             First Name
           </label>
           <input
@@ -76,7 +108,10 @@ const SignUp = () => {
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
-          <label htmlFor="lastName" className="block text-lg font-medium text-gray-700">
+          <label
+            htmlFor="lastName"
+            className="block text-lg font-medium text-gray-700"
+          >
             Last Name
           </label>
           <input
@@ -89,7 +124,10 @@ const SignUp = () => {
             onChange={(e) => setLastName(e.target.value)}
             required
           />
-          <label htmlFor="email" className="block text-lg font-medium text-gray-700">
+          <label
+            htmlFor="email"
+            className="block text-lg font-medium text-gray-700"
+          >
             Email
           </label>
           <input
@@ -102,7 +140,10 @@ const SignUp = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-          <label htmlFor="createPassword" className="block text-lg font-medium text-gray-700">
+          <label
+            htmlFor="createPassword"
+            className="block text-lg font-medium text-gray-700"
+          >
             Create Password
           </label>
           <input
@@ -115,7 +156,10 @@ const SignUp = () => {
             onChange={(e) => setCreatePassword(e.target.value)}
             required
           />
-          <label htmlFor="confirmPassword" className="block text-lg font-medium text-gray-700">
+          <label
+            htmlFor="confirmPassword"
+            className="block text-lg font-medium text-gray-700"
+          >
             Confirm Password
           </label>
           <input
@@ -136,7 +180,7 @@ const SignUp = () => {
             Sign Up
           </button>
           <p className="text-center">
-            Already have an account?{' '}
+            Already have an account?{" "}
             <Link to="/signin" className="text-blue-500 hover:text-blue-600">
               Sign In
             </Link>
@@ -167,11 +211,11 @@ const SignUp = () => {
             Google
           </button>
           <p className="text-center text-xs text-gray-400">
-            By clicking continue, you agree to our{' '}
+            By clicking continue, you agree to our{" "}
             <a href="#" className="text-gray-700 hover:text-gray-900">
               Terms of Service
-            </a>{' '}
-            and{' '}
+            </a>{" "}
+            and{" "}
             <a href="#" className="text-gray-700 hover:text-gray-900">
               Privacy Policy
             </a>
@@ -183,6 +227,3 @@ const SignUp = () => {
 };
 
 export default SignUp;
-
-
-

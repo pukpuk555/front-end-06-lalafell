@@ -1,45 +1,68 @@
-import React, { useState } from 'react';
+import { validateEmail } from "@/utils/helper";
+import axiosInstance from "@/utils/axiosInstance"; // นำเข้า axiosInstance
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const SignIn = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    const response = await fetch('http://your-backend-url/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email, password })
-    });
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
-    const data = await response.json();
+    if (!password) {
+      setError("Please enter your password.");
+      return;
+    }
 
-    if (response.ok) {
-      // เก็บโทเค็นใน local storage
-      localStorage.setItem('authToken', data.token);
+    setError("");
+    setLoading(true); // ตั้งค่า loading เพื่อแสดงการรอ
 
-      // เปลี่ยนเส้นทางไปยังหน้าที่ต้องการ
-      navigate('/protected-route');
-    } else {
-      // จัดการกรณีเข้าสู่ระบบล้มเหลว (เช่น แสดงข้อความผิดพลาด)
-      console.error('Login failed', data);
-      alert('เข้าสู่ระบบล้มเหลว: ' + data.message);
+    try {
+      const response = await axiosInstance.post("/login", {
+        email: email,
+        password: password,
+      });
+
+      if (
+        response.status === 200 &&
+        response.data &&
+        response.data.accessToken
+      ) {
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/");
+      } else {
+        setError("Login failed. Please check your email and password.");
+      }
+    } catch (err) {
+      if (err.response && err.response.data && err.response.data.message) {
+        setError(err.response.data.message);
+      } else {
+        setError("Something went wrong. Please try again later.");
+      }
+    } finally {
+      setLoading(false); // ยกเลิกการแสดงการรอ
     }
   };
 
   return (
     <div className="flex flex-col h-full items-center justify-center">
       <div className="bg-white md:rounded-lg md:shadow-lg w-full max-w-md p-6 md:border md:border-gray-300">
-        <form id="logIn" onSubmit={handleSubmit}>
+        <form id="logIn" onSubmit={handleLogin}>
           <h2 className="text-3xl font-bold text-center pt-4">Sign in</h2>
           <h3 className="text-xl text-center pt-2">Sign in to your account</h3>
-
-          <label htmlFor="email" className="block text-l font-medium text-gray-700 mt-4">
+          <label
+            htmlFor="email"
+            className="block text-l font-medium text-gray-700 mt-4"
+          >
             Email
           </label>
           <input
@@ -52,8 +75,10 @@ const SignIn = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-
-          <label htmlFor="password" className="block text-l font-medium text-gray-700">
+          <label
+            htmlFor="password"
+            className="block text-l font-medium text-gray-700"
+          >
             Password
           </label>
           <input
@@ -66,19 +91,24 @@ const SignIn = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
-          <Link to="/ForgotEmailorPassword" className="block text-blue-500 hover:text-blue-600 text-center">
+          <Link
+            to="/ForgotEmailorPassword"
+            className="block text-blue-500 hover:text-blue-600 text-center"
+          >
             Forgot email or password?
           </Link>
-
+          {error && <p className="text-red-500 text-center mt-4">{error}</p>}{" "}
+          {/* แสดงข้อผิดพลาด */}
           <button
             type="submit"
             className="px-4 py-2 mt-6 mb-4 bg-black hover:bg-gray-500 text-white rounded w-full"
+            disabled={loading} // ปิดปุ่มเมื่อกำลังโหลด
           >
-            Sign in with email
+            {loading ? "Signing in..." : "Sign in with email"}{" "}
+            {/* แสดงข้อความเมื่อกำลังโหลด */}
           </button>
           <p className="text-center">
-            Don't have an account?{' '}
+            Don't have an account?{" "}
             <Link to="/signup" className="text-blue-500 hover:text-blue-600">
               Sign Up
             </Link>
@@ -109,11 +139,11 @@ const SignIn = () => {
             Google
           </button>
           <p className="text-center text-xs text-gray-400">
-            By clicking continue, you agree to our{' '}
+            By clicking continue, you agree to our{" "}
             <a href="#" className="text-gray-700 hover:text-gray-900">
               Terms of Service
-            </a>{' '}
-            and{' '}
+            </a>{" "}
+            and{" "}
             <a href="#" className="text-gray-700 hover:text-gray-900">
               Privacy Policy
             </a>
@@ -125,10 +155,3 @@ const SignIn = () => {
 };
 
 export default SignIn;
-
-
-
-
-
-
-

@@ -1,7 +1,14 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function AccountNav() {
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    localStorage.clear();
+    console.log("User logged out");
+    navigate("/");
+  };
+
   return (
     <div className="border-[1px] border-black rounded-xl w-1/4 hidden md:flex">
       <div className="m-3">
@@ -31,6 +38,12 @@ function AccountNav() {
           >
             Your Order
           </Link>
+          <button
+            onClick={handleLogout}
+            className="text-xl font-medium py-3 pl-1 rounded-lg transition duration-300 hover:bg-gray-400"
+          >
+            Log Out
+          </button>
         </div>
       </div>
     </div>

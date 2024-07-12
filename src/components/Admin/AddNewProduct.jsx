@@ -45,9 +45,17 @@ const AddNewProduct = () => {
       console.error("Error creating product:", error.message);
     }
   };
+  
+  const handleCancel = () => {
+        setProductImages([]);
+        setSelectedAspectRatio("1:1");
+        setProductName("");
+        setCategory("");
+        setProductDescription("");
+    };
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto mt-40 w-[60%] p-4">
       <h1 className="text-2xl font-bold mb-4">Add a New Product</h1>
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="mb-4">
@@ -58,9 +66,7 @@ const AddNewProduct = () => {
                 key={index}
                 src={image.url}
                 alt={`Product ${index}`}
-                className={`w-24 ${
-                  image.aspectRatio === "1:1" ? "h-24" : "h-32"
-                } object-cover m-2 border border-gray-300`}
+                className={`w-72 ${image.aspectRatio === "1:1" ? 'h-72' : 'h-96'} object-cover m-2 border border-gray-300`}
               />
             ))}
           </div>
@@ -137,9 +143,16 @@ const AddNewProduct = () => {
         >
           Save and Publish
         </button>
+        <button
+          onClick={handleCancel}
+          className="bg-gray-300 text-black p-2 rounded hover:bg-gray-400"
+         >
+          Cancel
+         </button>
       </div>
     </div>
   );
 };
 
 export default AddNewProduct;
+

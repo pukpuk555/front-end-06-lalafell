@@ -9,6 +9,8 @@ function ProfileCard() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [imageSelected, setImageSelected] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   useEffect(() => {
     getUserData();
@@ -48,6 +50,39 @@ function ProfileCard() {
     }
   };
 
+  const handleUserImage = async (e) => {
+    e.preventDefault();
+    setUploadSuccess(false); // รีเซ็ตสถานะก่อนการอัปโหลดใหม่
+
+    if (e.target.files && e.target.files[0]) {
+      try {
+        const formData = new FormData();
+        formData.append("img", e.target.files[0]);
+
+        const response = await axiosInstance.put("/profile/image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        if (response.data && !response.data.error) {
+          setProfile(response.data.myUser);
+          setImageSelected(false); // ซ่อนปุ่ม Submit หลังจากอัปเดตสำเร็จ
+          setUploadSuccess(true); // ตั้งสถานะการอัปโหลดสำเร็จ
+        } else {
+          console.error(
+            "เกิดข้อผิดพลาดในการอัปเดตโปรไฟล์:",
+            response.data.message
+          );
+        }
+      } catch (error) {
+        console.error("เกิดข้อผิดพลาดในการส่งคำขอ:", error);
+      }
+    } else {
+      console.error("ไม่ได้เลือกไฟล์ภาพ");
+    }
+  };
+
   //API
   const getUserData = async () => {
     try {
@@ -77,11 +112,28 @@ function ProfileCard() {
             alt="profile"
             className="mt-10 w-[150px] h-[150px] rounded-xl"
           />
-          <button className="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5">
-            <div className="Change text-white text-base font-medium font-['Inter'] leading-normal">
-              Change
-            </div>
-          </button>
+          <label className="custom-file-input w-32 h-12 px-8 py-3.5 bg-black rounded-lg shadow text-white text-base font-medium font-['Inter'] leading-normal mt-5 cursor-pointer">
+            Change
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleUserImage}
+              className="hidden"
+            />
+          </label>
+          {imageSelected && (
+            <button
+              onClick={handleUserImage}
+              className="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5"
+            >
+              <div className="Change text-white text-base font-medium font-['Inter'] leading-normal">
+                Submit
+              </div>
+            </button>
+          )}
+          {uploadSuccess && (
+            <div className="text-green-500 mt-3">Upload Successful!</div>
+          )}
         </div>
         <div className="md:w-3/5 md:px-auto px-3">
           <h3 className="text-2xl font-semibold my-3">Edit Your Profile</h3>

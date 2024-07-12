@@ -38,9 +38,11 @@ function AccountNav() {
           >
             Your Order
           </Link>
+        </div>
+        <div className="m-3 flex h-[150px] items-end">
           <button
             onClick={handleLogout}
-            className="text-xl font-medium py-3 pl-1 rounded-lg transition duration-300 hover:bg-gray-400"
+            className="text-xl font-medium py-3 pl-1 rounded-lg transition duration-300 bg-black hover:bg-gray-400 h-[60px] w-full text-white"
           >
             Log Out
           </button>

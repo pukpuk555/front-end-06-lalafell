@@ -1,30 +1,41 @@
+import React from "react";
 import AccountNav from "@/components/MyAccount/AccountNav";
-import ContactButton from "@/components/ContactBotton/ContactButton";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
-import ProfileCard from "@/components/MyAccount/ProfileCard";
-import React, { useState } from "react";
+import { Outlet } from "react-router-dom";
+import axiosInstance from "@/utils/axiosInstance";
 
 function AccountPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profile, setProfile] = React.useState({});
+  const [orders, setOrders] = React.useState([]);
 
-  const toggleModal = () => {
-    setIsModalOpen(!isModalOpen);
-  };
+  React.useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const response = await axiosInstance.get("/profile");
+        if (response.data) {
+          setProfile(response.data.myUser);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchProfile();
+  }, []);
+
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col min-h-screen">
       <div className="z-50">
         <NavbarSection />
       </div>
-      <div className="flex justify-center md:mt-[100px] mt-[50px] pt-[50px]">
-        <div className="lg:w-[1024px] mx-2 w-screen flex md:justify-around justify-center">
+      <div className="flex justify-center md:mt-20 mt-10 pt-10">
+        <div className="lg:w-[1024px] mx-2 w-full flex md:justify-around justify-center">
           <AccountNav />
-          <ProfileCard />
+          <Outlet />
         </div>
       </div>
+      <div className="flex-grow"></div>
       <FooterSection />
-      <ContactButton onClick={toggleModal} />
-      {isModalOpen && <ContactForm onClose={toggleModal} />}
     </div>
   );
 }

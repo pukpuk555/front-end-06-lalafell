@@ -11,6 +11,7 @@ function AddressCard({
   province,
   postal,
   deleteAddress,
+  editAddress,
 }) {
   return (
     <div className="w-full h-[100px] rounded-xl border-[1px] border-black py-2 px-6 mb-3">
@@ -20,7 +21,23 @@ function AddressCard({
           <p className="text-sm">{tel}</p>
         </div>
         <div className="flex gap-3">
-          <button>Edit</button>
+          <button
+            onClick={() =>
+              editAddress({
+                id,
+                name,
+                lastName,
+                tel,
+                address,
+                sub,
+                district,
+                province,
+                postal,
+              })
+            }
+          >
+            Edit
+          </button>
           <button onClick={() => deleteAddress(id)}>Delete</button>
         </div>
       </div>

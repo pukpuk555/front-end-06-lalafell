@@ -1,6 +1,6 @@
 import React from "react";
 
-function ChangePasswodForm({ passwordForm }) {
+function ChangePasswordForm({ passwordForm }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     //logic under here
@@ -71,4 +71,4 @@ function ChangePasswodForm({ passwordForm }) {
   );
 }
 
-export default ChangePasswodForm;
+export default ChangePasswordForm;

@@ -1,36 +1,84 @@
-import React, { useState } from "react";
-import ChangePasswodForm from "./ChangePasswodForm";
+import React, { useState, useEffect } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 function ProfileCard() {
   const [emailToggle, setEmailToggle] = useState(false);
   const [changePassword, setChangePassword] = useState(false);
+  const [profile, setProfile] = useState({});
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    getUserData();
+  }, []);
 
   const emailOn = (e) => {
     e.preventDefault();
     setEmailToggle(!emailToggle);
   };
+
   const passwordForm = (e) => {
     e.preventDefault();
     setChangePassword(!changePassword);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //logic here
+    // ส่งข้อมูลที่แก้ไขแล้วไปที่ backend
+    try {
+      const response = await axiosInstance.patch("/profile", {
+        firstName,
+        lastName,
+        email,
+      });
+      if (response.data && !response.data.error) {
+        // อัปเดต state ในกรณีที่ไม่มี error
+        setProfile(response.data.myUser);
+        setEmailToggle(false);
+      } else {
+        console.error(
+          "เกิดข้อผิดพลาดในการอัปเดตโปรไฟล์:",
+          response.data.message
+        );
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //API
+  const getUserData = async () => {
+    try {
+      const response = await axiosInstance.get("/profile");
+      if (response.data) {
+        setProfile(response.data.myUser);
+        setFirstName(response.data.myUser.name);
+        setLastName(response.data.myUser.lastName);
+        setEmail(response.data.myUser.email);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
     <div className="w-auto mb-[50px]">
       <h2 className="text-4xl font-bold pb-3">Your Account</h2>
-      <div className=" md:w- lg:w-[700px] w-[500px] md:h-[450px] md:flex  border-[1px] border-black rounded-xl">
+      <div className="lg:w-[700px] w-[500px] md:h-[450px] md:flex border-[1px] border-black rounded-xl">
         <div className="md:w-2/5 flex flex-col items-center">
           <img
-            src="/defaultAccount.png"
+            src={
+              profile.img
+                ? profile.img.url || "/defaultAccount.png"
+                : "/defaultAccount.png"
+            }
             alt="profile"
             className="mt-10 w-[150px] h-[150px] rounded-xl"
           />
-          <button class="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5">
-            <div class="Change text-white text-base font-medium font-['Inter'] leading-normal">
+          <button className="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5">
+            <div className="Change text-white text-base font-medium font-['Inter'] leading-normal">
               Change
             </div>
           </button>
@@ -44,6 +92,9 @@ function ProfileCard() {
               <input
                 type="text"
                 name="firstName"
+                placeholder={profile.firstName || "First Name"}
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 id="firstname"
                 className="mt-1 mb-2 rounded-md border-[1px] border-black w-full lg:w-[330px] h-[30px]"
               />
@@ -54,6 +105,9 @@ function ProfileCard() {
               <input
                 type="text"
                 name="lasttName"
+                placeholder={profile.lastName || "Last Name"}
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 id="lastname"
                 className="mt-1 mb-2 rounded-md border-[1px] border-black w-full lg:w-[330px] h-[30px]"
               />
@@ -66,19 +120,19 @@ function ProfileCard() {
                   type="text"
                   name="email"
                   id="email"
-                  // placeholder change to usestate
-                  placeholder="example@example.com"
+                  placeholder={profile.email || "example@example.com"}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className={`mt-1 mb-2 rounded-md border-[1px] border-black w-[330px] h-[30px] ${
                     emailToggle ? "flex" : "hidden"
                   }`}
                 />
-
                 <p
                   className={`mt-1 mb-2 mx-3 ${
                     emailToggle ? "hidden" : "flex"
                   }`}
                 >
-                  example@example.com
+                  {profile.email}
                 </p>
                 <button onClick={emailOn} className="mr-3">
                   {emailToggle ? "Submit" : "Edit"}
@@ -96,16 +150,16 @@ function ProfileCard() {
             </div>
             <button
               type="submit"
-              class="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5"
+              className="Frame w-32 h-12 px-6 py-3.5 bg-black rounded-lg shadow justify-center items-center gap-2 inline-flex mt-5"
             >
-              <div class="Change text-white text-base font-medium font-['Inter'] leading-normal">
+              <div className="Change text-white text-base font-medium font-['Inter'] leading-normal">
                 Submit
               </div>
             </button>
           </form>
         </div>
       </div>
-      {changePassword && <ChangePasswodForm passwordForm={passwordForm} />}
+      {changePassword && <ChangePasswordForm passwordForm={passwordForm} />}
     </div>
   );
 }

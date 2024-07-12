@@ -17,7 +17,7 @@ const DisplayProduct = ({ whatNewArray }) => {
   };
 
   return (
-    <div className="flex flex-col justify-center min-h-screen py-4 mb-8 mt-[100px] md:mt-[120px]">
+    <div className="flex flex-col justify-center py-4 mb-8 md:mt-20 mt-10 pt-10">
       <div className="max-w-[1024px] mx-auto flex justify-center">
         <div className="w-full md:w-1/3 pr-4 hidden lg:block ">
           <FiltersButton />
@@ -30,12 +30,12 @@ const DisplayProduct = ({ whatNewArray }) => {
           <h2 className="text-2xl font-bold mb-4">In Stock</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filterProduct(whatNewArray).map((card, index) => (
-              <div key={index} className="bg-white rounded shadow-md p-2">
+              <div key={index} className="carousel-item md:flex md:justify-center">
                 <ProductCard
                   name={card.name}
                   img={card.img}
                   price={card.price}
-                  describe={card.describtion}
+                  describe={card.description}
                 />
               </div>
             ))}

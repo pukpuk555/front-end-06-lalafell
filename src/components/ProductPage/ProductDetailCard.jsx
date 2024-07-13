@@ -35,13 +35,13 @@ function ProductDetailCard({
     const totalPrice = product.price * quantity;
     const newProduct = {
 
-      product: [{ product: product.productId, quantity, price: product.price }],
+      product: [{ product: product.productId, quantity, price: product.price * quantity }],
       totalPrice,
 
     }
     console.log(newProduct);
     try {
-      const response = await axiosInstance.post('/cart', {
+      const response = await axiosInstance.patch('/cart', {
         // product: product.name,
         // quantity,
         // price: product.price,

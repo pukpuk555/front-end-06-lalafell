@@ -1,10 +1,17 @@
-import React, { useState } from "react";
+// CartPage.js
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
+import axiosInstance from "@/utils/axiosInstance";
+import PropTypes from "prop-types";
 
 function CartPage({ cart, setCart }) {
-  const [selectedItems, setSelectedItems] = useState({}); // State to manage selected items
+  const [selectedItems, setSelectedItems] = useState({});
+
+  useEffect(() => {
+    getCarts();
+  }, []);
 
   // Ensure the price is a number
   const parsePrice = (price) => {
@@ -22,11 +29,8 @@ function CartPage({ cart, setCart }) {
     setCart(updatedCart);
   };
 
-  const removeFromCart = (product) => {
-    // Filter out the item to be removed based on its name
-    const updatedCart = cart.filter((item) => {
-      return item.name !== product.name;
-    });
+  const removeFromCart = (productToRemove) => {
+    const updatedCart = cart.filter((item) => item.name !== productToRemove.name);
     setCart(updatedCart);
   };
 
@@ -48,8 +52,17 @@ function CartPage({ cart, setCart }) {
     }, 0);
   };
 
+  const getCarts = async () => {
+    try {
+      const response = await axiosInstance("/cart");
+      setCart(response.data.carts.product);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
-    <div className="flex flex-col min-h-screen ">
+    <div className="flex flex-col min-h-screen">
       <NavbarSection />
       <div className="container mx-auto mt-[100px] md:mt-[130px] flex-grow max-w-screen-lg">
         <h1 className="text-5xl font-bold mb-4">Cart</h1>
@@ -233,4 +246,11 @@ function CartPage({ cart, setCart }) {
   );
 }
 
+CartPage.propTypes = {
+  cart: PropTypes.array.isRequired,
+  setCart: PropTypes.func.isRequired,
+};
+
 export default CartPage;
+
+

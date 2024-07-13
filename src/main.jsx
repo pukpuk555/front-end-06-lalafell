@@ -111,7 +111,7 @@ const AppWrapper = () => {
           <Route path="order" element={<OrderHistory />} />
         </Route>
         <Route
-          path="/product/:productName"
+          path="/product/:id"
           element={
             <ProductPage whatNewArray={whatNewArray} addToCart={addToCart} />
           }

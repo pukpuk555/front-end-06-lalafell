@@ -49,9 +49,9 @@ function CartPage({ cart, setCart }) {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen ">
       <NavbarSection />
-      <div className="container mx-auto mt-[100px] md:mt-[130px] flex-grow">
+      <div className="container mx-auto mt-[100px] md:mt-[130px] flex-grow max-w-screen-lg">
         <h1 className="text-5xl font-bold mb-4">Cart</h1>
         {cart.length === 0 ? (
           <div>

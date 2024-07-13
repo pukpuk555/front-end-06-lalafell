@@ -1,10 +1,18 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
-function ProductCard({ name, img, price, describe }) {
+function ProductCard({
+  product_id,
+  name,
+  img,
+  price,
+  describe, }) {
+
   return (
     <Link
-      to={`/product/${name}`}
+      to={`/product/${product_id}`}
       className="hover:scale-105 transition duration-500"
     >
       <div className="card md:w-full bg-base-100 shadow-xl w-[200px]">

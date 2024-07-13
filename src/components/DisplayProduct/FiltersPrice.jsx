@@ -10,7 +10,7 @@ const FiltersPrice = () => {
     };
 
     return (
-        <div className='mt-8'>
+        <div >
             <h3 className='text-xl font-bold mt-4'>Price</h3>
             <div className='flex justify-between'>
                 <span className='flex items-center space-x-3 w-1/2'>

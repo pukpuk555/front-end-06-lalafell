@@ -45,14 +45,14 @@ const AddNewProduct = () => {
       console.error("Error creating product:", error.message);
     }
   };
-  
+
   const handleCancel = () => {
-        setProductImages([]);
-        setSelectedAspectRatio("1:1");
-        setProductName("");
-        setCategory("");
-        setProductDescription("");
-    };
+    setProductImages([]);
+    setSelectedAspectRatio("1:1");
+    setProductName("");
+    setCategory("");
+    setProductDescription("");
+  };
 
   return (
     <div className="container mx-auto mt-40 w-[60%] p-4">
@@ -146,9 +146,9 @@ const AddNewProduct = () => {
         <button
           onClick={handleCancel}
           className="bg-gray-300 text-black p-2 rounded hover:bg-gray-400"
-         >
+        >
           Cancel
-         </button>
+        </button>
       </div>
     </div>
   );

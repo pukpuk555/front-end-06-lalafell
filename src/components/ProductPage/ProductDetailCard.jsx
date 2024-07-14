@@ -35,7 +35,7 @@ function ProductDetailCard({
     const totalPrice = product.price * quantity;
     const newProduct = {
 
-      product: [{ product: product.productId, quantity, price: product.price}],
+      product: [{ product: product.productId, quantity, price: product.price*quantity}],
       totalPrice,
 
     }

@@ -2,7 +2,7 @@ import React from 'react'
 
 const FiltersProductType = ({ setIsSelected }) => {
     return (
-        <div className='mt-8'>
+        <div >
             <h3 className='text-xl font-bold'>Product type</h3>
             <div className='mt-4 mb-4'>
                 <input

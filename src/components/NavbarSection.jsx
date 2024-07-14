@@ -77,7 +77,7 @@ const NavbarSection = () => {
             )}
             {admin && (
               <Link
-                to="/admin"
+                to="/admin/Dashboard"
                 className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
               >
                 Admin

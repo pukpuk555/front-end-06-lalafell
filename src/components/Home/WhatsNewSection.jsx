@@ -41,6 +41,7 @@ function WhatsNewSection() {
                   img={card.img.url}
                   price={card.price}
                   describe={card.description}
+                  product_id={card._id}
                 />
               </div>
             ))}

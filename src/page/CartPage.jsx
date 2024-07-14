@@ -1,4 +1,5 @@
 // CartPage.js
+
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
@@ -22,29 +23,27 @@ function CartPage({ cart, setCart }) {
   // Function to handle quantity change
   const handleQuantityChange = (item, newQuantity) => {
     const updatedCart = cart.map((cartItem) =>
-      cartItem.name === item.name
-        ? { ...cartItem, quantity: newQuantity }
-        : cartItem
+      cartItem._id === item._id ? { ...cartItem, quantity: newQuantity } : cartItem
     );
     setCart(updatedCart);
   };
 
   const removeFromCart = (productToRemove) => {
-    const updatedCart = cart.filter((item) => item.name !== productToRemove.name);
+    const updatedCart = cart.filter((item) => item._id !== productToRemove._id);
     setCart(updatedCart);
   };
 
   const handleSelectItem = (item) => {
     setSelectedItems((prevSelectedItems) => ({
       ...prevSelectedItems,
-      [item.name]: !prevSelectedItems[item.name],
+      [item._id]: !prevSelectedItems[item._id],
     }));
   };
 
   // Calculate total price for selected items
   const getTotalPrice = () => {
     return cart.reduce((total, item) => {
-      if (selectedItems[item.name]) {
+      if (selectedItems[item._id]) {
         const itemPrice = parsePrice(item.price);
         return total + itemPrice * item.quantity;
       }
@@ -91,19 +90,19 @@ function CartPage({ cart, setCart }) {
                         <div className="flex justify-center">
                           <input
                             type="checkbox"
-                            checked={selectedItems[item.name] || false}
+                            checked={selectedItems[item._id] || false}
                             onChange={() => handleSelectItem(item)}
                           />
                         </div>
                       </td>
                       <td className="px-4 py-2 flex items-center">
                         <img
-                          src={item.img}
-                          alt={item.name}
+                          src={item.product.img.url}
+                          alt={item.product.name}
                           className="w-16 h-16 mr-4"
                         />
                         <p className="md:font-bold md:text-xl font-semibold">
-                          {item.name}
+                          {item.product.name}
                         </p>
                       </td>
                       <td className="px-4 py-2">
@@ -165,19 +164,22 @@ function CartPage({ cart, setCart }) {
                     <div className="flex justify-center p-3">
                       <input
                         type="checkbox"
-                        checked={selectedItems[item.name] || false}
+                        checked={selectedItems[item._id] || false}
                         onChange={() => handleSelectItem(item)}
                       />
                     </div>
                     <img
-                      src={item.img}
-                      alt={item.name}
+                      src={item.product.img.url}
+                      alt={item.product.name}
                       className="w-20 h-20 mr-4"
                     />
                     <div className="flex justify-between w-full items-center">
                       <div className="flex flex-col gap-3">
-                        <p className="font-bold text-lg">{item.name}</p>
-                        <p className="font-bold">{item.description}</p>
+                        <p className="font-bold text-lg">{item.product.name}</p>
+                        {/* Include description if available */}
+                        {item.product.description && (
+                          <p className="font-bold">{item.product.description}</p>
+                        )}
                         <div className="flex">
                           <button
                             onClick={() =>
@@ -225,7 +227,7 @@ function CartPage({ cart, setCart }) {
                 <Link
                   to="/checkout"
                   state={{
-                    cart: cart.filter((item) => selectedItems[item.name]),
+                    cart: cart.filter((item) => selectedItems[item._id]),
                   }}
                   className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 w-full flex justify-center rounded ${
                     Object.keys(selectedItems).length === 0
@@ -252,5 +254,7 @@ CartPage.propTypes = {
 };
 
 export default CartPage;
+
+
 
 

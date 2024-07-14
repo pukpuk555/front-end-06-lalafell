@@ -1,5 +1,4 @@
 // CartPage.js
-
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
@@ -23,33 +22,35 @@ function CartPage({ cart, setCart }) {
   // Function to handle quantity change
   const handleQuantityChange = (item, newQuantity) => {
     const updatedCart = cart.map((cartItem) =>
-      cartItem._id === item._id ? { ...cartItem, quantity: newQuantity } : cartItem
+      cartItem.name === item.name
+        ? { ...cartItem, quantity: newQuantity }
+        : cartItem
     );
     setCart(updatedCart);
   };
 
   const removeFromCart = (productToRemove) => {
-    const updatedCart = cart.filter((item) => item._id !== productToRemove._id);
+    const updatedCart = cart.filter((item) => item.name !== productToRemove.name);
     setCart(updatedCart);
   };
 
   const handleSelectItem = (item) => {
     setSelectedItems((prevSelectedItems) => ({
       ...prevSelectedItems,
-      [item._id]: !prevSelectedItems[item._id],
+      [item.name]: !prevSelectedItems[item.name],
     }));
   };
 
-  // Calculate total price for selected items
-  const getTotalPrice = () => {
-    return cart.reduce((total, item) => {
-      if (selectedItems[item._id]) {
-        const itemPrice = parsePrice(item.price);
-        return total + itemPrice * item.quantity;
-      }
-      return total;
-    }, 0);
-  };
+ // Calculate total price for selected items
+const getTotalPrice = () => {
+  return cart.reduce((total, item) => {
+    if (selectedItems[item.name]) {
+      const itemPrice = parsePrice(item.price);
+      return total + itemPrice * item.quantity;
+    }
+    return total;
+  }, 0);
+};
 
   const getCarts = async () => {
     try {
@@ -90,19 +91,19 @@ function CartPage({ cart, setCart }) {
                         <div className="flex justify-center">
                           <input
                             type="checkbox"
-                            checked={selectedItems[item._id] || false}
+                            checked={selectedItems[item.name] || false}
                             onChange={() => handleSelectItem(item)}
                           />
                         </div>
                       </td>
                       <td className="px-4 py-2 flex items-center">
                         <img
-                          src={item.product.img.url}
-                          alt={item.product.name}
+                          src={item.img}
+                          alt={item.name}
                           className="w-16 h-16 mr-4"
                         />
                         <p className="md:font-bold md:text-xl font-semibold">
-                          {item.product.name}
+                          {item.name}
                         </p>
                       </td>
                       <td className="px-4 py-2">
@@ -164,22 +165,19 @@ function CartPage({ cart, setCart }) {
                     <div className="flex justify-center p-3">
                       <input
                         type="checkbox"
-                        checked={selectedItems[item._id] || false}
+                        checked={selectedItems[item.name] || false}
                         onChange={() => handleSelectItem(item)}
                       />
                     </div>
                     <img
-                      src={item.product.img.url}
-                      alt={item.product.name}
+                      src={item.img}
+                      alt={item.name}
                       className="w-20 h-20 mr-4"
                     />
                     <div className="flex justify-between w-full items-center">
                       <div className="flex flex-col gap-3">
-                        <p className="font-bold text-lg">{item.product.name}</p>
-                        {/* Include description if available */}
-                        {item.product.description && (
-                          <p className="font-bold">{item.product.description}</p>
-                        )}
+                        <p className="font-bold text-lg">{item.name}</p>
+                        <p className="font-bold">{item.description}</p>
                         <div className="flex">
                           <button
                             onClick={() =>
@@ -227,7 +225,7 @@ function CartPage({ cart, setCart }) {
                 <Link
                   to="/checkout"
                   state={{
-                    cart: cart.filter((item) => selectedItems[item._id]),
+                    cart: cart.filter((item) => selectedItems[item.name]),
                   }}
                   className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 w-full flex justify-center rounded ${
                     Object.keys(selectedItems).length === 0
@@ -254,6 +252,10 @@ CartPage.propTypes = {
 };
 
 export default CartPage;
+
+
+
+
 
 
 

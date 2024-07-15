@@ -22,18 +22,42 @@ function CartPage({ cart, setCart }) {
   };
 
   // Function to handle quantity change
-  const handleQuantityChange = (item, newQuantity) => {
+/*   const handleQuantityChange = (item, newQuantity) => {
     const updatedCart = cart.map((cartItem) =>
       cartItem._id === item._id
         ? { ...cartItem, quantity: newQuantity }
         : cartItem
     );
     setCart(updatedCart);
+  }; */
+
+  const handleQuantityChange = async (item, newQuantity) => {
+    try {
+      await axiosInstance.put(`/cart/${item.product._id}`, { quantity: newQuantity });
+      const updatedCart = cart.map((cartItem) =>
+        cartItem.product._id === item.product._id
+          ? { ...cartItem, quantity: newQuantity }
+          : cartItem
+      );
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Error updating cart item quantity:', error);
+    }
   };
 
-  const removeFromCart = (productToRemove) => {
+ /*  const removeFromCart = (productToRemove) => {
     const updatedCart = cart.filter((item) => item._id !== productToRemove._id);
     setCart(updatedCart);
+  }; */
+ 
+  const removeFromCart = async (productToRemove) => {
+    try {
+      await axiosInstance.delete(`/cart/${productToRemove.product._id}`);
+      const updatedCart = cart.filter((item) => item.product._id !== productToRemove.product._id);
+      setCart(updatedCart);
+    } catch (error) {
+      console.error('Error removing product from cart:', error);
+    }
   };
 
   const handleSelectItem = (item) => {

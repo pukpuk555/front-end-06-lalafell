@@ -3,29 +3,30 @@ import { CgSearch } from 'react-icons/cg';
 import axiosInstance from '../../utils/axiosInstance';
 
 const SearchBar = ({ search, setSearch }) => {
-  const [products, setProduct] = useState([]);
+  const [products, setProducts] = useState([]);
 
-  const getProducts = async () => {
-    try {
-      const response = await axiosInstance.get(`/product/search?query=${query}`);
-      const data = response.data.products;
-
-      setProduct(data);
-    }
-    catch (err) {
-      console.log('get product :', err);
-    }
-  };
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const query = e.target.value;
 
     if (query.length > 2) {
-      setSearch(query);
+      try {
+        const response = await axiosInstance.get(`/search?query=${query}`);
+        const data = response.data.products;
+        setProducts(data);
+      } catch (err) {
+        console.log('Error fetching products:', err);
+        setProducts([]);
+      }
+    } else {
+      setProducts([]);
     }
-    else {
-      setProduct([]);
-    }
+
+    setSearch(query);
   };
+
+  useEffect(() => {
+    console.log(products); // This will log the updated products whenever it changes.
+  }, [products]);
 
   return (
     <div>

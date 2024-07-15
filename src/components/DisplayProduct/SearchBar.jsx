@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { CgSearch } from 'react-icons/cg';
 import axiosInstance from '../../utils/axiosInstance';
 
-const SearchBar = ({ search, setSearch }) => {
-  const [products, setProducts] = useState([]);
+const SearchBar = ({ search, setSearch, setFilterProduct, filterProduct }) => {
+
 
   const handleInputChange = async (e) => {
     const query = e.target.value;
@@ -12,21 +12,18 @@ const SearchBar = ({ search, setSearch }) => {
       try {
         const response = await axiosInstance.get(`/search?query=${query}`);
         const data = response.data.products;
-        setProducts(data);
+        setFilterProduct(data);
       } catch (err) {
         console.log('Error fetching products:', err);
-        setProducts([]);
+        setFilterProduct([]);
       }
     } else {
-      setProducts([]);
+      setFilterProduct([]);
     }
 
     setSearch(query);
   };
 
-  useEffect(() => {
-    console.log(products); // This will log the updated products whenever it changes.
-  }, [products]);
 
   return (
     <div>
@@ -41,9 +38,9 @@ const SearchBar = ({ search, setSearch }) => {
           aria-label='Search products'
         />
       </div>
-      {products.length > 0 && (
+      {filterProduct.length > 0 && (
         <ul className='bg-white border rounded-md shadow-md mt-2'>
-          {products.map((product) => (
+          {filterProduct.map((product) => (
             <li key={product._id} className='p-2 border-b last:border-0'>
               {product.name}
             </li>

@@ -10,7 +10,7 @@ function OurProduct({ whatNewArray }) {
         <NavbarSection />
       </div>
       <DisplayProduct whatNewArray={whatNewArray} />
-      <div className="flex-grow"></div> 
+      <div className="flex-grow"></div>
       <FooterSection />
     </div>
   );

@@ -3,7 +3,7 @@ import { CiCircleChevRight, CiViewList, CiDeliveryTruck } from "react-icons/ci";
 import SearchBar from "./SearchBar";
 import FiltersProductType from "./FiltersProductType";
 import FiltersPrice from "./FiltersPrice";
-const FilterButton = () => {
+const FilterButton = ({ filterProduct, setFilterProduct }) => {
 
     const [nav, setNav] = useState(false);
     const [search, setSearch] = useState('');
@@ -15,7 +15,7 @@ const FilterButton = () => {
                 <CiCircleChevRight onClick={() => setNav(!nav)} className='absolute right-[-30px] top-28 lg:top-40 cursor-pointer text-4xl hover:bg-black hover:text-white hover:rounded-full' />
                 <h3 className="text-2xl font-bold px-8 lg:mx-8">Filter</h3>
                 <div className='flex flex-col px-8 lg:pl-14'>
-                    <SearchBar setSearch={setSearch} />
+                    <SearchBar setSearch={setSearch} filterProduct={filterProduct} setFilterProduct={setFilterProduct} />
                     <FiltersProductType />
                     <FiltersPrice />
                 </div>

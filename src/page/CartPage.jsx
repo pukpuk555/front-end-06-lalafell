@@ -9,6 +9,8 @@ import PropTypes from "prop-types";
 function CartPage({ cart, setCart }) {
   const [selectedItems, setSelectedItems] = useState({});
 
+  console.log(cart)
+
   useEffect(() => {
     getCarts();
   }, []);
@@ -22,7 +24,7 @@ function CartPage({ cart, setCart }) {
   // Function to handle quantity change
   const handleQuantityChange = (item, newQuantity) => {
     const updatedCart = cart.map((cartItem) =>
-      cartItem.name === item.name
+      cartItem._id === item._id
         ? { ...cartItem, quantity: newQuantity }
         : cartItem
     );
@@ -30,27 +32,27 @@ function CartPage({ cart, setCart }) {
   };
 
   const removeFromCart = (productToRemove) => {
-    const updatedCart = cart.filter((item) => item.name !== productToRemove.name);
+    const updatedCart = cart.filter((item) => item._id !== productToRemove._id);
     setCart(updatedCart);
   };
 
   const handleSelectItem = (item) => {
     setSelectedItems((prevSelectedItems) => ({
       ...prevSelectedItems,
-      [item.name]: !prevSelectedItems[item.name],
+      [item._id]: !prevSelectedItems[item._id],
     }));
   };
 
- // Calculate total price for selected items
-const getTotalPrice = () => {
-  return cart.reduce((total, item) => {
-    if (selectedItems[item.name]) {
-      const itemPrice = parsePrice(item.price);
-      return total + itemPrice * item.quantity;
-    }
-    return total;
-  }, 0);
-};
+  // Calculate total price for selected items
+  const getTotalPrice = () => {
+    return cart.reduce((total, item) => {
+      if (selectedItems[item._id]) {
+        const itemPrice = parsePrice(item.price);
+        return total + itemPrice * item.quantity;
+      }
+      return total;
+    }, 0);
+  };
 
   const getCarts = async () => {
     try {
@@ -86,24 +88,25 @@ const getTotalPrice = () => {
                 </thead>
                 <tbody>
                   {cart.map((item, index) => (
+
                     <tr key={index} className="border-t">
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
                           <input
                             type="checkbox"
-                            checked={selectedItems[item.name] || false}
+                            checked={selectedItems[item._id] || false}
                             onChange={() => handleSelectItem(item)}
                           />
                         </div>
                       </td>
                       <td className="px-4 py-2 flex items-center">
                         <img
-                          src={item.img}
-                          alt={item.name}
+                          src={item.product.img.url}
+                          alt={item.product.name}
                           className="w-16 h-16 mr-4"
                         />
                         <p className="md:font-bold md:text-xl font-semibold">
-                          {item.name}
+                          {item.product.name}
                         </p>
                       </td>
                       <td className="px-4 py-2">
@@ -165,18 +168,18 @@ const getTotalPrice = () => {
                     <div className="flex justify-center p-3">
                       <input
                         type="checkbox"
-                        checked={selectedItems[item.name] || false}
+                        checked={selectedItems[item._id] || false}
                         onChange={() => handleSelectItem(item)}
                       />
                     </div>
                     <img
-                      src={item.img}
-                      alt={item.name}
+                      src={item.product.img.url}
+                      alt={item.product.name}
                       className="w-20 h-20 mr-4"
                     />
                     <div className="flex justify-between w-full items-center">
                       <div className="flex flex-col gap-3">
-                        <p className="font-bold text-lg">{item.name}</p>
+                        <p className="font-bold text-lg">{item._id}</p>
                         <p className="font-bold">{item.description}</p>
                         <div className="flex">
                           <button
@@ -225,13 +228,12 @@ const getTotalPrice = () => {
                 <Link
                   to="/checkout"
                   state={{
-                    cart: cart.filter((item) => selectedItems[item.name]),
+                    cart: cart.filter((item) => selectedItems[item._id]),
                   }}
-                  className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 w-full flex justify-center rounded ${
-                    Object.keys(selectedItems).length === 0
-                      ? "opacity-50 cursor-not-allowed"
-                      : ""
-                  }`}
+                  className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 w-full flex justify-center rounded ${Object.keys(selectedItems).length === 0
+                    ? "opacity-50 cursor-not-allowed"
+                    : ""
+                    }`}
                   disabled={Object.keys(selectedItems).length === 0}
                 >
                   Check Out

@@ -77,7 +77,7 @@ const NavbarSection = () => {
             )}
             {admin && (
               <Link
-                to="/admin/dashboard"
+                to="/admin/Dashboard"
                 className="bg-black text-white py-2 px-4  rounded-lg hover:bg-black/80"
               >
                 Admin
@@ -113,9 +113,8 @@ const NavbarSection = () => {
         ></div>
       )}
       <div
-        className={`fixed right-0 bottom-20 bg-white shadow-lg rounded-lg p-4 z-50 ${
-          userMenuOpen ? "block" : "hidden"
-        }`}
+        className={`fixed right-0 bottom-20 bg-white shadow-lg rounded-lg p-4 z-50 ${userMenuOpen ? "block" : "hidden"
+          }`}
       >
         <ul>
           {!isToken ? (

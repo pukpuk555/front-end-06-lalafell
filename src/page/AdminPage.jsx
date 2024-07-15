@@ -6,7 +6,7 @@ import AdminSidebar from '../components/Admin/AdminSidebar';
 
 
 
-const AdminDashboard = () => {
+const AdminPage = () => {
     return (
         <div className="flex">
             <AdminSidebar />
@@ -22,5 +22,5 @@ const AdminDashboard = () => {
     );
 }
 
-export default AdminDashboard;
+export default AdminPage;
 

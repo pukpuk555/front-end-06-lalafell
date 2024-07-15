@@ -98,7 +98,7 @@ const getTotalPrice = () => {
                       </td>
                       <td className="px-4 py-2 flex items-center">
                         <img
-                          src={item.img}
+                          src={item.img.url}
                           alt={item.name}
                           className="w-16 h-16 mr-4"
                         />

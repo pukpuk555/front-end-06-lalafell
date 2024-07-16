@@ -18,8 +18,11 @@ function ProductCard({ product_id, name, img, price, describe }) {
   };
 
   return (
-    <div className="hover:scale-105 transition duration-500">
-      <Link to={`/product/${product_id}`} className="card md:w-full bg-base-100 shadow-xl w-[200px]">
+    <div className="hover:scale-105 transition duration-500 bg-white">
+      <Link
+        to={`/product/${product_id}`}
+        className="card md:w-full bg-base-100 shadow-xl w-[200px]"
+      >
         <figure>
           <img src={img} alt={name} />
         </figure>
@@ -46,5 +49,3 @@ function ProductCard({ product_id, name, img, price, describe }) {
 }
 
 export default ProductCard;
-
-

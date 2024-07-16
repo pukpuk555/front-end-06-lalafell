@@ -9,13 +9,10 @@ function CartPage({ cart, setCart }) {
   const [selectedItems, setSelectedItems] = useState({});
   const navigate = useNavigate();
 
-  console.log(cart)
-
   useEffect(() => {
     getCarts();
   }, []);
 
-  // Ensure the price is a number
   const parsePrice = (price) => {
     const parsedPrice = parseFloat(price);
     return isNaN(parsedPrice) ? 0 : parsedPrice;
@@ -107,10 +104,10 @@ function CartPage({ cart, setCart }) {
     <div className="flex flex-col min-h-screen">
       <NavbarSection />
       <div className="container mx-auto mt-[100px] md:mt-[130px] flex-grow max-w-screen-lg">
-        <h1 className="text-5xl font-bold mb-4">Cart</h1>
+        <h1 className="text-4xl font-bold mb-4">Cart</h1>
         {cart.length === 0 ? (
           <div>
-            <p className="text-2xl">Your cart is empty.</p>
+            <p className="text-xl">Your cart is empty.</p>
           </div>
         ) : (
           <div>
@@ -144,9 +141,7 @@ function CartPage({ cart, setCart }) {
                           alt={item.product.name}
                           className="w-16 h-16 mr-4"
                         />
-                        <p className="md:font-bold md:text-xl font-semibold">
-                          {item.product.name}
-                        </p>
+                        <p className="font-semibold text-lg">{item.product.name}</p>
                       </td>
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
@@ -172,12 +167,12 @@ function CartPage({ cart, setCart }) {
                         </div>
                       </td>
                       <td className="px-4 py-2 text-center">
-                        <p className="md:font-bold md:text-xl font-semibold">
+                        <p className="font-semibold text-lg">
                           {parsePrice(item.price).toLocaleString()} THB
                         </p>
                       </td>
                       <td className="px-4 py-2 text-center">
-                        <p className="md:font-bold md:text-xl font-semibold">
+                        <p className="font-semibold text-lg">
                           {(parsePrice(item.price) * item.quantity).toLocaleString()} THB
                         </p>
                       </td>
@@ -210,9 +205,7 @@ function CartPage({ cart, setCart }) {
                       alt={item.product.name}
                       className="w-16 h-16 mx-4"
                     />
-                    <p className="md:font-bold md:text-xl font-semibold">
-                      {item.product.name}
-                    </p>
+                    <p className="font-semibold text-lg">{item.product.name}</p>
                   </div>
                   <div className="flex justify-between items-center mb-4">
                     <div className="flex items-center">
@@ -237,10 +230,10 @@ function CartPage({ cart, setCart }) {
                       </button>
                     </div>
                     <div className="text-center">
-                      <p className="md:font-bold md:text-xl font-semibold">
+                      <p className="font-semibold text-lg">
                         {parsePrice(item.price).toLocaleString()} THB
                       </p>
-                      <p className="md:font-bold md:text-xl font-semibold">
+                      <p className="font-semibold text-lg">
                         {(parsePrice(item.price) * item.quantity).toLocaleString()} THB
                       </p>
                     </div>
@@ -257,19 +250,22 @@ function CartPage({ cart, setCart }) {
               ))}
             </div>
             <div className="mt-4">
-              <p className="text-xl">
-                Total Price:{" "}
-                <span className="font-bold">
-                  {getTotalPrice().toLocaleString()} THB
-                </span>
-              </p>
-              <button
-                onClick={handleCheckout}
-                className="border bg-black text-white px-4 py-2 mt-2 rounded-md"
-                disabled={getTotalPrice() === 0}
-              >
-                CheckOut
-              </button>
+              <div className="flex flex-col items-center md:items-end">
+                <p className="text-lg md:text-xl mb-2 md:mb-0">
+                  Total Price:{" "}
+                  <span className="font-bold">
+                    {getTotalPrice().toLocaleString()} THB
+                  </span>
+                </p>
+                <button
+                  onClick={handleCheckout}
+                  className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 my-4 w-full md:w-[300px] rounded ${Object.keys(selectedItems).length === 0 ? "opacity-50 cursor-not-allowed" : ""}`}
+                  disabled={getTotalPrice() === 0}
+                  style={{ maxWidth: "100%" }}
+                >
+                  Check Out
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -285,5 +281,3 @@ CartPage.propTypes = {
 };
 
 export default CartPage;
-
-

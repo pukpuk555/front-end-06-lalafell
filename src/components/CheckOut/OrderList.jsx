@@ -1,97 +1,45 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
 
-const OrderList = ({ items }) => {
-  const parsePrice = (price) => {
-    const parsedPrice = parseFloat(price);
-    return isNaN(parsedPrice) ? 0 : parsedPrice;
-  };
-
+const OrderList = ({ products }) => {
   return (
     <div>
-      <div className="overflow-x-auto md:block hidden">
-        <table className="min-w-full">
+      <div className="overflow-x-auto md:block">
+        <table className="w-full mb-2">
           <thead>
             <tr>
-              <th className="px-4 py-2">Product</th>
-              <th className="px-4 py-2">Quantity</th>
-              <th className="px-4 py-2">Price</th>
-              <th className="px-4 py-2">Total Price</th>
+              <th className="text-center">Product</th>
+              <th className="text-center">Quantity</th>
+              <th className="text-center">Price</th>
+              <th className="text-center">Total</th>
             </tr>
           </thead>
           <tbody>
-            {items.map((item, index) => (
-              <tr key={index} className="border-t">
-                <td className="px-4 py-2 flex items-center">
+            {products.map((product, index) => (
+              <tr key={index} className="border-b">
+                <td className="flex items-center gap-4">
                   <img
-                    src={item.img}
-                    alt={item.productName}
-                    className="w-16 h-16 mr-4"
+                    src={product.productId.img.url}
+                    alt={product.productId.name}
+                    className="w-20 h-20 object-cover"
                   />
-                  <p className="md:font-bold md:text-xl font-semibold">
-                    {item.productName}
-                  </p>
+                  <p className="font-bold">{product.productId.name}</p>
                 </td>
-                <td className="px-4 py-2 text-center">
-                  <p className="md:font-bold md:text-xl font-semibold">
-                    {item.quantity}
-                  </p>
+                <td className="text-sm md:text-base text-center">
+                  <p>{product.quantity}</p>
                 </td>
-                <td className="px-4 py-2 text-center">
-                  <p className="md:font-bold md:text-xl font-semibold">
-                    {parsePrice(item.price).toLocaleString()} THB
-                  </p>
+                <td className="text-sm md:text-base text-center">
+                  <p className="font-semibold">{product.price} Bath</p>
                 </td>
-                <td className="px-4 py-2 text-center">
-                  <p className="md:font-bold md:text-xl font-semibold">
-                    {(parsePrice(item.price) * item.quantity).toLocaleString()} THB
-                  </p>
+                <td className="font-bold text-sm md:text-base text-center">
+                  <p>{(product.price * product.quantity).toFixed(2)} Bath</p>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <div className="md:hidden block">
-        {items.map((item, index) => (
-          <div key={index} className="border-t py-4">
-            <div className="flex items-center mb-4">
-              <img
-                src={item.img}
-                alt={item.productName}
-                className="w-16 h-16 mx-4"
-              />
-              <p className="md:font-bold md:text-xl font-semibold">
-                {item.productName}
-              </p>
-            </div>
-            <div className="flex justify-between items-center mb-4">
-              <div className="text-center">
-                <p className="md:font-bold md:text-xl font-semibold">
-                  {parsePrice(item.price).toLocaleString()} THB
-                </p>
-                <p className="md:font-bold md:text-xl font-semibold">
-                  {(parsePrice(item.price) * item.quantity).toLocaleString()} THB
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
 
-OrderList.propTypes = {
-  items: PropTypes.array.isRequired,
-};
-
 export default OrderList;
-
-
-
-
-
-
-
-

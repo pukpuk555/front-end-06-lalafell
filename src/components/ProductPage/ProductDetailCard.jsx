@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "@/utils/axiosInstance";
 import { useParams } from "react-router-dom";
-/* import { useHistory } from "react-router-dom"; */
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProductDetailCard({
   productId,
@@ -10,16 +11,13 @@ function ProductDetailCard({
   price,
   type,
   describe,
-  spec
+  spec,
 }) {
   const [quantity, setQuantity] = useState(1);
-  /* const history = useHistory(); */
-
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
-
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -34,28 +32,32 @@ function ProductDetailCard({
   const addToCart = async (product, quantity) => {
     const totalPrice = product.price * quantity;
     const newProduct = {
-
-      product: [{ product: product.productId, quantity, price: product.price}],
+      product: [{ product: product.productId, quantity, price: product.price }],
       totalPrice,
+    };
 
-    }
-    console.log(newProduct);
     try {
-      const response = await axiosInstance.patch('/cart', {
-        // product: product.name,
-        // quantity,
-        // price: product.price,
-        // totalPrice
-        ...newProduct
-      }, { authorization: `Bearer ${localStorage.getItem('token')}` });
+      const response = await axiosInstance.patch("/cart", newProduct, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       if (!response.data.error) {
-        history.push('/cart');
+        toast.success(`${product.name} x ${quantity} added to cart!`, {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+        });
       } else {
         console.error(response.data.message);
       }
     } catch (error) {
-      console.error('Error adding to cart:', error);
+      console.error("Error adding to cart:", error);
     }
   };
 

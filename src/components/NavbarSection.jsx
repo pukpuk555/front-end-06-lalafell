@@ -98,7 +98,7 @@ const NavbarSection = () => {
           <Link to="/productlist">
             <FaSearch className="h-6 w-6" />
           </Link>
-          <Link to="/cart">
+          <Link to={!isToken ? "/signin" : "/cart"}>
             <FaShoppingCart className="h-6 w-6" />
           </Link>
           <Link to="#">

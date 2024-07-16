@@ -1,20 +1,25 @@
 import React, { useState, useEffect } from "react";
+import axiosInstance from "@/utils/axiosInstance";
+import { useParams } from "react-router-dom";
+/* import { useHistory } from "react-router-dom"; */
 
 function ProductDetailCard({
+  productId,
   name,
   img,
   price,
   type,
   describe,
-  spec,
-  addToCart,
-  navigate,
+  spec
 }) {
   const [quantity, setQuantity] = useState(1);
+  /* const history = useHistory(); */
+
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
   };
+
 
   const decreaseQuantity = () => {
     if (quantity > 1) {
@@ -26,8 +31,36 @@ function ProductDetailCard({
     setQuantity(1);
   }, [name]);
 
+  const addToCart = async (product, quantity) => {
+    const totalPrice = product.price * quantity;
+    const newProduct = {
+
+      product: [{ product: product.productId, quantity, price: product.price}],
+      totalPrice,
+
+    }
+    console.log(newProduct);
+    try {
+      const response = await axiosInstance.patch('/cart', {
+        // product: product.name,
+        // quantity,
+        // price: product.price,
+        // totalPrice
+        ...newProduct
+      }, { authorization: `Bearer ${localStorage.getItem('token')}` });
+
+      if (!response.data.error) {
+        history.push('/cart');
+      } else {
+        console.error(response.data.message);
+      }
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+    }
+  };
+
   const handleAddToCart = () => {
-    addToCart({ name, img, price, type, describe, spec }, quantity);
+    addToCart({ productId, name, img, price, type, describe, spec }, quantity);
   };
 
   return (
@@ -35,7 +68,7 @@ function ProductDetailCard({
       <div className="w-screen md:w-[1024px] mx-5 lg:mx-0 flex items-center border border-gray-300 rounded-lg shadow-lg">
         <div className="w-full">
           <img
-            src={img}
+            src={img?.url}
             alt={name}
             className="max-w-full h-auto rounded-l-lg"
           />

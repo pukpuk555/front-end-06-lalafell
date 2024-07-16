@@ -1,50 +1,53 @@
-import React, { useState } from "react";
-// import ProductList from "./ProductList";
-import FiltersProductType from "./FiltersProductType";
-import FiltersButton from "./FiltersButton";
-import SearchBar from "./SearchBar";
-import FiltersPrice from "./FiltersPrice";
+import React, { useEffect, useState } from "react";
+import axiosInstance from "../../utils/axiosInstance";
 import ProductCard from "../ProductCard";
+import FiltersButton from "./FiltersButton";
 
-const DisplayProduct = ({ whatNewArray }) => {
-    console.log(whatNewArray);
-    const [search, setSearch] = useState("");
+const DisplayProduct = () => {
+    const [product, setProduct] = useState([]);
 
-    const filterProduct = (products) => {
-        return products.filter((product) =>
-            product.name.toLowerCase().includes(search.toLowerCase())
-        );
-    };
+    const getProducts = async () => {
+        try {
+            const response = await axiosInstance.get("/product");
+            console.log('Response from API:', response);
+
+            if (response.data && response.data.products) {
+                setProduct(response.data.products);
+            }
+        } catch (err) {
+            console.log('get product :', err);
+        }
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, []);
 
     return (
-        <div className="flex flex-col justify-center py-4 mb-8 md:mt-20 mt-10 pt-10">
-            <div className="max-w-[1024px] mx-auto flex justify-center">
-                <div className="w-full md:w-1/3 pr-4">
+        <div>
+            <div className="max-w-[1024px] mx-auto mt-40">
+                <div className="w-full">
                     <FiltersButton />
-                    <SearchBar search={search} setSearch={setSearch} />{" "}
-                    <FiltersProductType />
-                    <FiltersPrice />
                 </div>
-
-
-                <div className="w-full ml-10">
+                <div className="w-full mb-16">
                     <h2 className="text-2xl font-bold mb-4">In Stock</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                        {filterProduct(whatNewArray).map((card, index) => (
-                            <div key={index} className="carousel-item md:flex md:justify-center">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+                        {product.map((card, index) => (
+                            <div key={index}>
                                 <ProductCard
                                     name={card.name}
-                                    img={card.img}
+                                    img={card.img.url}
                                     price={card.price}
                                     describe={card.description}
+                                    product_id={card._id}
                                 />
                             </div>
                         ))}
                     </div>
                 </div>
             </div>
-        </div >
+        </div>
     );
-};
+}
 
 export default DisplayProduct;

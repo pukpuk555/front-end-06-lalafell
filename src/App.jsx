@@ -5,12 +5,9 @@ import OurProductSection from "./components/Home/OurProductSection";
 import HeroComponent from "./components/Home/HeroComponent";
 import WhatsNewSection from "./components/Home/WhatsNewSection";
 
-
 const App = ({ whatNewArray }) => {
-
-
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen bg-white">
       <div className="z-50">
         <NavbarSection />
       </div>

@@ -54,7 +54,10 @@ const NavbarSection = () => {
             <Link to="/productlist" className="py-2 rounded-lg hover:underline">
               Our Product
             </Link>
-            <Link to="/cart" className="py-2 rounded-lg hover:underline">
+            <Link
+              to={!isToken ? "/signin" : "/cart"}
+              className="py-2 rounded-lg hover:underline"
+            >
               Cart
             </Link>
             <Link to="#" className="py-2 rounded-lg hover:underline">
@@ -113,8 +116,9 @@ const NavbarSection = () => {
         ></div>
       )}
       <div
-        className={`fixed right-0 bottom-20 bg-white shadow-lg rounded-lg p-4 z-50 ${userMenuOpen ? "block" : "hidden"
-          }`}
+        className={`fixed right-0 bottom-20 bg-white shadow-lg rounded-lg p-4 z-50 ${
+          userMenuOpen ? "block" : "hidden"
+        }`}
       >
         <ul>
           {!isToken ? (

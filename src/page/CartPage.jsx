@@ -1,6 +1,5 @@
-// CartPage.js
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FooterSection from "@/components/FooterSection";
 import NavbarSection from "@/components/NavbarSection";
 import axiosInstance from "@/utils/axiosInstance";
@@ -8,6 +7,7 @@ import PropTypes from "prop-types";
 
 function CartPage({ cart, setCart }) {
   const [selectedItems, setSelectedItems] = useState({});
+  const navigate = useNavigate();
 
   console.log(cart)
 
@@ -20,16 +20,6 @@ function CartPage({ cart, setCart }) {
     const parsedPrice = parseFloat(price);
     return isNaN(parsedPrice) ? 0 : parsedPrice;
   };
-
-  // Function to handle quantity change
-/*   const handleQuantityChange = (item, newQuantity) => {
-    const updatedCart = cart.map((cartItem) =>
-      cartItem._id === item._id
-        ? { ...cartItem, quantity: newQuantity }
-        : cartItem
-    );
-    setCart(updatedCart);
-  }; */
 
   const handleQuantityChange = async (item, newQuantity) => {
     try {
@@ -45,11 +35,6 @@ function CartPage({ cart, setCart }) {
     }
   };
 
- /*  const removeFromCart = (productToRemove) => {
-    const updatedCart = cart.filter((item) => item._id !== productToRemove._id);
-    setCart(updatedCart);
-  }; */
- 
   const removeFromCart = async (productToRemove) => {
     try {
       await axiosInstance.delete(`/cart/${productToRemove.product._id}`);
@@ -63,14 +48,13 @@ function CartPage({ cart, setCart }) {
   const handleSelectItem = (item) => {
     setSelectedItems((prevSelectedItems) => ({
       ...prevSelectedItems,
-      [item._id]: !prevSelectedItems[item._id],
+      [item.product._id]: !prevSelectedItems[item.product._id],
     }));
   };
 
-  // Calculate total price for selected items
   const getTotalPrice = () => {
     return cart.reduce((total, item) => {
-      if (selectedItems[item._id]) {
+      if (selectedItems[item.product._id]) {
         const itemPrice = parsePrice(item.price);
         return total + itemPrice * item.quantity;
       }
@@ -84,6 +68,38 @@ function CartPage({ cart, setCart }) {
       setCart(response.data.carts.product);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const handleCheckout = async () => {
+    const selectedCartItems = cart.filter((item) => selectedItems[item.product._id]);
+
+    const items = selectedCartItems.map((item) => ({
+      productId: item.product._id,
+      productName: item.product.name,
+      quantity: item.quantity,
+      price: item.price,
+      img: item.product.img.url,
+    }));
+
+    const total = getTotalPrice();
+
+    const checkoutData = {
+      items,
+      total,
+      paymentMethod: "credit_card",
+      address: "Your delivery address here",
+    };
+
+    try {
+      const response = await axiosInstance.post("/checkout", checkoutData);
+      if (response.status === 201) {
+        navigate("/checkout", { state: { selectedItems: items } });
+      } else {
+        console.error("Checkout creation failed");
+      }
+    } catch (error) {
+      console.error("Error creating checkout:", error);
     }
   };
 
@@ -112,13 +128,12 @@ function CartPage({ cart, setCart }) {
                 </thead>
                 <tbody>
                   {cart.map((item, index) => (
-
                     <tr key={index} className="border-t">
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
                           <input
                             type="checkbox"
-                            checked={selectedItems[item._id] || false}
+                            checked={selectedItems[item.product._id] || false}
                             onChange={() => handleSelectItem(item)}
                           />
                         </div>
@@ -136,44 +151,43 @@ function CartPage({ cart, setCart }) {
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
                           <button
-                            onClick={() =>
-                              handleQuantityChange(item, item.quantity - 1)
-                            }
+                            onClick={() => handleQuantityChange(item, item.quantity - 1)}
                             className="border px-2 font-bold text-white bg-black rounded-l-md"
                             disabled={item.quantity <= 1}
                           >
                             -
                           </button>
-                          <p className="border md:px-4 px-1 font-bold">
-                            {item.quantity}
-                          </p>
+                          <input
+                            type="text"
+                            value={item.quantity}
+                            readOnly
+                            className="border text-center w-12"
+                          />
                           <button
-                            onClick={() =>
-                              handleQuantityChange(item, item.quantity + 1)
-                            }
+                            onClick={() => handleQuantityChange(item, item.quantity + 1)}
                             className="border px-2 font-bold text-white bg-black rounded-r-md"
                           >
                             +
                           </button>
                         </div>
                       </td>
-                      <td className="px-4 py-2">
-                        <div className="flex justify-center">
-                          ${parsePrice(item.price).toFixed(2)}
-                        </div>
+                      <td className="px-4 py-2 text-center">
+                        <p className="md:font-bold md:text-xl font-semibold">
+                          {parsePrice(item.price).toLocaleString()} THB
+                        </p>
                       </td>
-                      <td className="px-4 py-2">
-                        <div className="flex justify-center">
-                          ${(parsePrice(item.price) * item.quantity).toFixed(2)}
-                        </div>
+                      <td className="px-4 py-2 text-center">
+                        <p className="md:font-bold md:text-xl font-semibold">
+                          {(parsePrice(item.price) * item.quantity).toLocaleString()} THB
+                        </p>
                       </td>
                       <td className="px-4 py-2">
                         <div className="flex justify-center">
                           <button
                             onClick={() => removeFromCart(item)}
-                            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                            className="border bg-red-600 text-white px-2 rounded-md"
                           >
-                            Delete
+                            Remove
                           </button>
                         </div>
                       </td>
@@ -184,85 +198,78 @@ function CartPage({ cart, setCart }) {
             </div>
             <div className="md:hidden block">
               {cart.map((item, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between border-t border-b py-2 w-full"
-                >
-                  <div className="flex items-center w-full">
-                    <div className="flex justify-center p-3">
-                      <input
-                        type="checkbox"
-                        checked={selectedItems[item._id] || false}
-                        onChange={() => handleSelectItem(item)}
-                      />
-                    </div>
+                <div key={index} className="border-t py-4">
+                  <div className="flex items-center mb-4">
+                    <input
+                      type="checkbox"
+                      checked={selectedItems[item.product._id] || false}
+                      onChange={() => handleSelectItem(item)}
+                    />
                     <img
                       src={item.product.img.url}
                       alt={item.product.name}
-                      className="w-20 h-20 mr-4"
+                      className="w-16 h-16 mx-4"
                     />
-                    <div className="flex justify-between w-full items-center">
-                      <div className="flex flex-col gap-3">
-                        <p className="font-bold text-lg">{item._id}</p>
-                        <p className="font-bold">{item.description}</p>
-                        <div className="flex">
-                          <button
-                            onClick={() =>
-                              handleQuantityChange(item, item.quantity - 1)
-                            }
-                            className="border px-2 font-bold text-white bg-black rounded-l-md"
-                            disabled={item.quantity <= 1}
-                          >
-                            -
-                          </button>
-                          <p className="border md:px-4 px-1 font-bold">
-                            {item.quantity}
-                          </p>
-                          <button
-                            onClick={() =>
-                              handleQuantityChange(item, item.quantity + 1)
-                            }
-                            className="border px-2 font-bold text-white bg-black rounded-r-md"
-                          >
-                            +
-                          </button>
-                        </div>
-                      </div>
-                      <div className="flex flex-col gap-3 justify-between py-3">
-                        <button
-                          onClick={() => removeFromCart(item)}
-                          className="bg-red-500 hover:bg-red-700 text-white text-sm font-semibold px-4 rounded"
-                        >
-                          Delete
-                        </button>
-                        <p className="font-semibold">
-                          ${parsePrice(item.price).toFixed(2)}
-                        </p>
-                      </div>
+                    <p className="md:font-bold md:text-xl font-semibold">
+                      {item.product.name}
+                    </p>
+                  </div>
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="flex items-center">
+                      <button
+                        onClick={() => handleQuantityChange(item, item.quantity - 1)}
+                        className="border px-2 font-bold text-white bg-black rounded-l-md"
+                        disabled={item.quantity <= 1}
+                      >
+                        -
+                      </button>
+                      <input
+                        type="text"
+                        value={item.quantity}
+                        readOnly
+                        className="border text-center w-12 mx-2"
+                      />
+                      <button
+                        onClick={() => handleQuantityChange(item, item.quantity + 1)}
+                        className="border px-2 font-bold text-white bg-black rounded-r-md"
+                      >
+                        +
+                      </button>
                     </div>
+                    <div className="text-center">
+                      <p className="md:font-bold md:text-xl font-semibold">
+                        {parsePrice(item.price).toLocaleString()} THB
+                      </p>
+                      <p className="md:font-bold md:text-xl font-semibold">
+                        {(parsePrice(item.price) * item.quantity).toLocaleString()} THB
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex justify-center">
+                    <button
+                      onClick={() => removeFromCart(item)}
+                      className="border bg-red-600 text-white px-2 rounded-md"
+                    >
+                      Remove
+                    </button>
                   </div>
                 </div>
               ))}
             </div>
-            <div className="flex flex-col md:flex-row justify-end mt-4 items-center">
-              <div className="flex flex-col items-center justify-center w-[300px] gap-3">
-                <p className="font-bold text-xl">
-                  Total: ${getTotalPrice().toFixed(2)}
-                </p>
-                <Link
-                  to="/checkout"
-                  state={{
-                    cart: cart.filter((item) => selectedItems[item._id]),
-                  }}
-                  className={`bg-black hover:bg-gray-800 text-white font-bold text-xl py-2 px-4 w-full flex justify-center rounded ${Object.keys(selectedItems).length === 0
-                    ? "opacity-50 cursor-not-allowed"
-                    : ""
-                    }`}
-                  disabled={Object.keys(selectedItems).length === 0}
-                >
-                  Check Out
-                </Link>
-              </div>
+            <div className="mt-4">
+              <p className="text-xl">
+                Total Price:{" "}
+                <span className="font-bold">
+                  {getTotalPrice().toLocaleString()} THB
+                </span>
+              </p>
+              <button
+                onClick={handleCheckout}
+                className="border bg-black text-white px-4 py-2 mt-2 rounded-md"
+                disabled={getTotalPrice() === 0}
+              >
+                CheckOut
+              </button>
             </div>
           </div>
         )}
@@ -278,19 +285,5 @@ CartPage.propTypes = {
 };
 
 export default CartPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

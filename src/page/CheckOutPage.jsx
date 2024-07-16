@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation, Link } from 'react-router-dom'; // นำเข้า Link มาใช้งาน
+import { useLocation, Link } from 'react-router-dom';
 import NavbarSection from '@/components/NavbarSection';
 import FooterSection from '@/components/FooterSection';
 import AddressSection from '@/components/CheckOut/AddressSection';
@@ -11,25 +11,6 @@ function CheckoutPage() {
   const location = useLocation();
   const selectedItems = location.state?.selectedItems || [];
 
-/*   const handlePurchase = async () => {
-    const response = await fetch('', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        items: selectedItems,
-        // Add other necessary data like user ID, payment method, etc.
-      }),
-    });
-
-    if (response.ok) {
-      console.log('Purchase successful!');
-    } else {
-      console.error('Purchase failed');
-    }
-  };
- */
   const address = {
     name: "John Doe",
     phone: "0123456789",
@@ -48,7 +29,7 @@ function CheckoutPage() {
         <SummarySection items={selectedItems} />
         <div className="flex justify-center md:justify-end my-4">
           <Link to="/status">
-            <button /* onClick={handlePurchase} */ className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full md:w-auto">
+            <button className="bg-black hover:bg-gray-700 text-white font-bold py-2 px-4 rounded w-full md:w-auto">
               Purchase
             </button>
           </Link>
@@ -60,20 +41,4 @@ function CheckoutPage() {
 }
 
 export default CheckoutPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

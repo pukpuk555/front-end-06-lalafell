@@ -5,6 +5,7 @@ import FiltersButton from "./FiltersButton";
 
 const DisplayProduct = () => {
     const [product, setProduct] = useState([]);
+    const [filterProduct, setFilterProduct] = useState([]);
 
     const getProducts = async () => {
         try {
@@ -27,22 +28,38 @@ const DisplayProduct = () => {
         <div>
             <div className="max-w-[1024px] mx-auto mt-40">
                 <div className="w-full">
-                    <FiltersButton />
+                    <FiltersButton filterProduct={filterProduct} setFilterProduct={setFilterProduct} />
                 </div>
                 <div className="w-full mb-16">
                     <h2 className="text-2xl font-bold mb-4">In Stock</h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-                        {product.map((card, index) => (
-                            <div key={index}>
-                                <ProductCard
-                                    name={card.name}
-                                    img={card.img.url}
-                                    price={card.price}
-                                    describe={card.description}
-                                    product_id={card._id}
-                                />
-                            </div>
-                        ))}
+                        {filterProduct.length > 0 ? (
+                            // ถ้ามี filterProduct ให้ map filterProduct
+                            filterProduct.map((card, index) => (
+                                <div key={index}>
+                                    <ProductCard
+                                        name={card.name}
+                                        img={card.img.url}
+                                        price={card.price}
+                                        describe={card.description}
+                                        product_id={card._id}
+                                    />
+                                </div>
+                            ))
+                        ) : (
+                            // ถ้าไม่มี filterProduct ให้ map product
+                            product.map((card, index) => (
+                                <div key={index}>
+                                    <ProductCard
+                                        name={card.name}
+                                        img={card.img.url}
+                                        price={card.price}
+                                        describe={card.description}
+                                        product_id={card._id}
+                                    />
+                                </div>
+                            ))
+                        )}
                     </div>
                 </div>
             </div>

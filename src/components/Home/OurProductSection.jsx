@@ -2,7 +2,6 @@ import React from "react";
 
 const OurProductSection = () => {
     return (
-
         <div className="md:w-[1024px] w-screen md:mx-auto scroll-smooth mb-10 flex flex-cols items-center">
             <section className="m-auto mx-5 lg:mx-0 w-screen ">
                 <h3 className="text-2xl md:text-3xl font-bold my-5">Our Products</h3>

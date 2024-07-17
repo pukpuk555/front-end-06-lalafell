@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axiosInstance from "@/utils/axiosInstance";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -14,6 +14,8 @@ function ProductDetailCard({
   spec,
 }) {
   const [quantity, setQuantity] = useState(1);
+  const isToken = localStorage.getItem("token");
+  const navigate = useNavigate();
 
   const increaseQuantity = () => {
     setQuantity(quantity + 1);
@@ -62,7 +64,12 @@ function ProductDetailCard({
   };
 
   const handleAddToCart = () => {
-    addToCart({ productId, name, img, price, type, describe, spec }, quantity);
+    !isToken
+      ? navigate("/signin")
+      : addToCart(
+          { productId, name, img, price, type, describe, spec },
+          quantity
+        );
   };
 
   return (
